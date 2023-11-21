@@ -104,16 +104,35 @@ function computer_turn() {
 
     matrix["$row","$column"]="O"
     printf "\n"
+
+    save_to_file "./data/file.txt"
 }
 
-function check_if_done() {
-    for ((i=1; i<=$rows; i++)); do
-        for ((j=1; j<=$cols; j++)); do
-            if [ "${matrix[$i,$j]}" = "$target" ]; then
-                return 
-            fi
+function save_to_file() {
+    filename=$1
+    for ((r = 1; r <= 3; r++)); do
+        for ((c = 1; c <= 3; c++)); do
+            echo -n "${matrix[$c,$r]} " >> "$filename"
         done
+        echo >> "$filename"
     done
 }
 
+function read_from_file() {
+    filename=$1
+    r=1
+    while IFS= read -r line; do
+        line=$(echo "$line" | tr -d '[:space:]')
+        c=1
+        for ((i = 0; i < ${#line}; i++)); do
+            char="${line:i:1}"
+            matrix[$r,$c]="$char"
+            ((c++))
+        done
+        ((r++))
+    done < "$filename"
+}
+
 game
+# read_from_file "./data/file.txt"
+# print
