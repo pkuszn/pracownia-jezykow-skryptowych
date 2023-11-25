@@ -33,29 +33,43 @@ function print() {
 }
 
 function game() {
-    readonly start_msg="Enter your choice..."
+    readonly start_msg="Enter your choice: "
     readonly start_opt="Start"
+    readonly next_turn_msg="Next turn"
+    readonly save_to_file_msg="Save match to file"
     readonly load_opt="Load previous match"
     readonly exit_opt="Exit"
     readonly choice_msg="1) ${start_opt}\n2) ${load_opt}\n3) ${exit_opt}\n"
+    readonly choince_inner_msg="1) ${next_turn_msg}\n2) ${save_to_file_msg}\n3) ${exit_opt}\n"
 
-    printf "${choice_msg}"
-    read -p "${start_msg}" choice
+    printf "$choice_msg"
+    read -r -p "${start_msg}" choice
     case $choice in
         "1")
-            echo "you chose $start_opt"
             init
             while [ "$game_over" = false ]; do
-                user_turn
-                sleep 1
-                computer_turn
+                print_new_line
+                printf "$choince_inner_msg"
+                read -p "${start_msg}" choice_inner
+                case $choice_inner in
+                    "1")
+                        user_turn
+                        sleep 1
+                        computer_turn
+                    ;;
+                    "2")
+                        save_to_file "./data/file.txt"
+                    ;;
+                    "3")
+                        exit 0
+                    ;;
+                esac
             done
             ;;
         "2")
-            echo "you chose $load_opt"
             ;;
         "3")
-            echo "you chose $exit_opt"
+            exit 0
             ;;
     esac
 }
@@ -68,6 +82,8 @@ function user_turn() {
     col_msg="Col: "
     local empty_field=false
     local empty_field_sign="?"
+
+    check_empty_spaces
 
     print_new_line
     print
@@ -98,6 +114,7 @@ function computer_turn() {
     declare -A arrays_of_index
     local empty_field_sign="?"
     local inc=0
+    local debug=false
 
     print
     for ((i=1; i<=cols; i++)); do
@@ -111,13 +128,16 @@ function computer_turn() {
     done
 
     if [ "${#arrays_of_index[@]}" -eq 0 ]; then
-        return
+        echo "Nobody won the match..."
+        exit 0
     fi
 
-    print_new_line
-    for index in "${!arrays_of_index[@]}"; do
-        echo "Index $index: ${arrays_of_index[$index]}"
-    done
+    if [ "$debug" = true ]; then
+        print_new_line
+        for index in "${!arrays_of_index[@]}"; do
+            echo "Index $index: ${arrays_of_index[$index]}"
+        done
+    fi
 
     print_new_line
     echo "$computer_turn_msg"
@@ -125,7 +145,9 @@ function computer_turn() {
 
     random_index=$((RANDOM % ${#arrays_of_index[@]}))
 
-    echo "Computer selected index is <$random_index>"
+    if [ "$debug" = true ]; then
+        echo "Computer selected index is <$random_index>"
+    fi
 
     random_value="${arrays_of_index[$random_index]}"
     IFS=',' read -r c r <<< "$random_value"
@@ -178,10 +200,12 @@ function check_for_winner() {
 function check_rows_or_columns() {
     local player=$1
 
-    for ((i = 1; i < 3; i++)); do
+    for ((i = 1; i <= 3; i++)); do
         if [[ ${matrix[$i,1]} == "$player" && ${matrix[$i,2]} == "$player" && ${matrix[$i,3]} == "$player" ]] || \
            [[ ${matrix[1,$i]} == "$player" && ${matrix[2,$i]} == "$player" && ${matrix[3,$i]} == "$player" ]]; then
-            echo "Player $player wins!"
+            echo "Player $player won!"
+            print_new_line
+            print
             exit 0
         fi
     done
@@ -192,7 +216,27 @@ function check_diagonals() {
 
     if [[ ${matrix[1,1]} == "$player" && ${matrix[2,2]} == "$player" && ${matrix[3,3]} == "$player" ]] || \
        [[ ${matrix[1,3]} == "$player" && ${matrix[2,2]} == "$player" && ${matrix[3,1]} == "$player" ]]; then
-        echo "Player $player wins!"
+        echo "Player $player won!"
+        print_new_line
+        print
+        exit 0
+    fi
+}
+
+function check_empty_spaces() {
+    local inc=0
+
+    for ((i=1; i<=cols; i++)); do
+        for ((j=1; j<=rows; j++)); do
+            if [ "${matrix[$i,$j]}" = "$empty_field_sign" ]; then
+                ((inc++))
+            fi
+        done
+    done
+
+    if [ "$inc" -eq 0 ]; then
+        print_new_line
+        echo "Nobody won the match..."
         exit 0
     fi
 }
@@ -204,45 +248,3 @@ function print_new_line() {
 # Main function
 game
 
-
-# Cases
-
-# C1
-# |X| | |
-# |X| | |
-# |X| | |
-
-# C2
-# | |X| |
-# | |X| |
-# | |X| |
-
-# C3
-# | | |X|
-# | | |X|
-# | | |X|
-
-# C4
-# |X|X|X|
-# | | | |
-# | | | |
-
-# C5
-# | | | |
-# |X|X|X|
-# | | | |
-
-# C6
-# | | | |
-# | | | |
-# |X|X|X|
-
-# C7
-# |X| | |
-# | |X| |
-# | | |X|
-
-# C8
-# | | |X|
-# | |X| |
-# |X| | |
