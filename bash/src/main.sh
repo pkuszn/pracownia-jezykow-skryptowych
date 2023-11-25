@@ -4,6 +4,7 @@ declare -A matrix
 rows=3
 cols=3
 game_over=false
+filename="./data/file.txt"
 
 function init() {
     for ((i=1;i<=rows;i++)) do
@@ -41,6 +42,7 @@ function game() {
     readonly exit_opt="Exit"
     readonly choice_msg="1) ${start_opt}\n2) ${load_opt}\n3) ${exit_opt}\n"
     readonly choince_inner_msg="1) ${next_turn_msg}\n2) ${save_to_file_msg}\n3) ${exit_opt}\n"
+    readonly file_save_msg="File was saved to"
 
     printf "$choice_msg"
     read -r -p "${start_msg}" choice
@@ -50,7 +52,7 @@ function game() {
             while [ "$game_over" = false ]; do
                 print_new_line
                 printf "$choince_inner_msg"
-                read -p "${start_msg}" choice_inner
+                read -r -p "${start_msg}" choice_inner
                 case $choice_inner in
                     "1")
                         user_turn
@@ -58,7 +60,9 @@ function game() {
                         computer_turn
                     ;;
                     "2")
-                        save_to_file "./data/file.txt"
+                        save_to_file "$filename"
+                        echo "$file_save_msg $filename"
+                        exit 0
                     ;;
                     "3")
                         exit 0
@@ -67,6 +71,31 @@ function game() {
             done
             ;;
         "2")
+            read_from_file "$filename"
+            print_new_line
+            echo "Loaded match from file $filename"
+            print_new_line
+            print
+            while [ "$game_over" = false ]; do
+                print_new_line
+                printf "$choince_inner_msg"
+                read -r -p "${start_msg}" choice_inner
+                case $choice_inner in
+                    "1")
+                        user_turn
+                        sleep 1
+                        computer_turn
+                    ;;
+                    "2")
+                        save_to_file "$filename"
+                        echo "$file_save_msg $filename"
+                        exit 0
+                    ;;
+                    "3")
+                        exit 0
+                    ;;
+                esac
+            done
             ;;
         "3")
             exit 0
@@ -86,8 +115,6 @@ function user_turn() {
     check_empty_spaces
 
     print_new_line
-    print
-    print_new_line
     echo "$user_turn_msg"
     print_new_line
     echo "$chose_cell_msg"
@@ -105,6 +132,8 @@ function user_turn() {
         fi
     done
 
+    print
+
     print_new_line
     check_for_winner "X"
 }
@@ -116,9 +145,8 @@ function computer_turn() {
     local inc=0
     local debug=false
 
-    print
-    for ((i=1; i<=cols; i++)); do
-        for ((j=1; j<=rows; j++)); do
+    for ((i=1; i <= cols; i++)); do
+        for ((j=1; j <= rows; j++)); do
             if [ "${matrix[$i,$j]}" = "$empty_field_sign" ]; then
                 indexes=("${i}, ${j}")
                 arrays_of_index[$inc]=$indexes
@@ -160,11 +188,13 @@ function computer_turn() {
 
     matrix["$column","$row"]="O"
 
+    print
+    print_new_line
     check_for_winner "O"
 }
 
 function save_to_file() {
-    local filename=$1
+    truncate -s 0 "$filename" 
     for ((r = 1; r <= cols; r++)); do
         for ((c = 1; c <= rows; c++)); do
             echo -n "${matrix[$c,$r]} " >> "$filename"
@@ -174,14 +204,13 @@ function save_to_file() {
 }
 
 function read_from_file() {
-    local filename=$1
     local r=1
     while IFS= read -r line; do
         line=$(echo "$line" | tr -d '[:space:]')
         c=1
         for ((i = 0; i < ${#line}; i++)); do
             char="${line:i:1}"
-            matrix[$r,$c]="$char"
+            matrix[$c,$r]="$char"
             ((c++))
         done
         ((r++))
@@ -226,8 +255,8 @@ function check_diagonals() {
 function check_empty_spaces() {
     local inc=0
 
-    for ((i=1; i<=cols; i++)); do
-        for ((j=1; j<=rows; j++)); do
+    for ((i=1; i <= cols; i++)); do
+        for ((j=1; j <= rows; j++)); do
             if [ "${matrix[$i,$j]}" = "$empty_field_sign" ]; then
                 ((inc++))
             fi
