@@ -8,6 +8,25 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - menu
+  - open_hours
+  - place_order
+
+slots:
+  user_name:
+    type: text
+  delivery_address:
+    type: text
+  quantity:
+    type: number
+  dish:
+    type: text
+  special_request:
+    type: text
+  date:
+    type: date
+  day:
+    type: text
 
 responses:
   utter_greet:

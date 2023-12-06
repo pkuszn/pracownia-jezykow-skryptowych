@@ -28,3 +28,33 @@ stories:
   - action: utter_did_that_help
   - intent: deny
   - action: utter_goodbye
+
+- story: open_hours
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: is_open
+    - action: action_open_hours
+  
+- story: menu
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: menu
+    - action: action_list_menu
+
+- story: place_order
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: place_order
+    - action: action_place_order
+    - intent: user_info
+    - action: action_user_info
+  
+- story: meal_availability
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: meal_availability
+    - action: meal_availability
