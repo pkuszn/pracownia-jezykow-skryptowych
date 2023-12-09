@@ -11,22 +11,61 @@ intents:
   - menu
   - open_hours
   - place_order
+  - meal_availability
+  - user_info
+
+entities:
+  - user_name
+  - delivery_address
+  - quantity
+  - dish
+  - special_request
+  - date
+  - day
 
 slots:
   user_name:
     type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: user_name
   delivery_address:
     type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: delivery_address
   quantity:
-    type: number
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: quantity
   dish:
     type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: dish
   special_request:
     type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: special_request
   date:
-    type: date
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: date
   day:
     type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: day
 
 responses:
   utter_greet:
@@ -47,6 +86,25 @@ responses:
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
+
+  utter_order_meal:
+  - text: "Sure, let's get started with your order. What would you like to have today?"
+
+  utter_user_info:
+  - text: "May I know your name, please?"
+
+  utter_user_delivery_type:
+  - text: "How would you like your order to be delivered? We offer options such as home delivery, takeout, and curbside pickup. What's your preference?"
+
+  utter_user_address: 
+  - text: "To assist you better, could you please provide your delivery address?"
+
+actions:
+  - action_list_menu
+  - action_meal_availability
+  - action_open_hours
+  - action_place_order
+  - action_user_info
 
 session_config:
   session_expiration_time: 60

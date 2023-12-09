@@ -90,34 +90,28 @@ nlu:
     - am I talking to a bot?
     - am I talking to a human?
 
-- intent: is_open
+- intent: open_hours
   examples: |
-    - Is the restaurant open on [date](2023-12-06) at [time](12:00 PM)?
-    - What are the opening hours on [date](2023-12-06) at [time](12:00 PM)?
-    - Can I visit the restaurant on [date](2023-12-06) at [time](12:00 PM)?
-    - Tell me if the restaurant is operating on [date](2023-12-06) at [time](12:00 PM)
-    - Are you serving on [date](2023-12-06) at [time](12:00 PM)?
-    - What time does the restaurant open on [date](2023-12-06)?
-    - Are you available on [date](2023-12-06) for lunch at [time](12:00 PM)?
-    - Tell me if I can dine in on [date](2023-12-06) at [time](12:00 PM)
-    - What's the schedule for [date](2023-12-06) at [time](12:00 PM)?
-    - Do you accept customers on [date](2023-12-06) at [time](12:00 PM)?
-    - Is the restaurant opn on [date](2023-12-06) at [time](12:00 PM)?
-    - What are the opning hours on [date](2023-12-06) at [time](12:00 PM)? 
-    - Can I visit the restrant on [date](2023-12-06) at [time](12:00 PM)?
-    - Tell me if the resturant is oprating on [date](2023-12-06) at [time](12:00 PM)
-    - Are you serving on [date](2023-12-06) at [time](12:00 PM)?
-    - What time does the restaraunt open on [date](2023-12-06)?
-    - Are you availabe on [date](2023-12-06) for lunch at [time](12:00 PM)?
-    - Tell me if I can dine in on [date](2023-12-06) at [time](12:00 PM)
-    - What's the schdule for [date](2023-12-06) at [time](12:00 PM)?
-    - Do you acceot customers on [date](2023-12-06) at [time](12:00 PM)?
-    - Is the resturant open on [date](2023-12-06) at [time](12:00 PM)? and can I book a table for three?
-    - What time does the restrant close on [date](2023-12-06) at [time](12:00 PM)?
-    - Are you operting on [date](2023-12-06) at [time](12:00 PM)? I need a reservation.
-    - Is the restaraunt clsed on [date](2023-12-06) at [time](12:00 PM)? I want to place an order.
-    - What's your opning hours on [date](2023-12-06) at [time](12:00 PM)?
-    - Can I come in on [date](2023-12-06) at [time](12:00 PM)? and can you provide the menu?
+    - Can you tell me if the restaurant is open on [day]?
+    - What are the operating hours for the restaurant on [day]?
+    - Is the restaurant open for business on [day]?
+    - Could you inform me about the opening hours on [day]?
+    - I'm curious if the restaurant operates on [day]?
+    - What's the schedule for the restaurant on [day]?
+    - Is the restaurant available for customers on [day]?
+    - Are there any restrictions to access the restaurant on [day]?
+    - Can you check if the restaurant is open this [day]?
+    - What time does the restaurant open on [day]?
+    - Can you tell me if the restaurant is opn on [day]? 
+    - What are the operatng hours for the restaurant on [day]?  
+    - Is the restaurant open for bussiness on [day]?  
+    - Could you inform me about the opening hurs on [day]? 
+    - I'm curious if the restaurant operates on [day]? 
+    - What's the schedule for the restaurant on [day]?
+    - Is the restaurant available for customers on [day]?
+    - Are there any restrictons to access the restaurant on [day]?
+    - Can you check if the restaurant is open this [day]?
+    - What time does the restaurant open on [day]?
 
 - intent: menu
   examples: |
@@ -142,6 +136,31 @@ nlu:
     - Provide details about the available dishes
     - Display the mnue, pleas
 
+- intent: place_order_start
+  examples: |
+    - I would like to make an order.
+    - Can I place an order?
+    - How do I start the ordering process?
+    - I want to order something.
+    - Is it possible to make an order right now?
+    - What are the steps to place an order?
+    - How do I begin the ordering process?
+    - I'm looking to order food. What should I do?
+    - Could I make a purchase from your menu?
+    - What's the procedure for ordering?
+    - I'm interested in making an order. How does it work?
+    - I would like to make an ordr.
+    - Can I plae an order?
+    - How do I start the ordering proces?
+    - I want to oder something!
+    - Is it possible to make an ordes right now?
+    - What are the steps to placing an oder?
+    - How do I begining the ordering process?
+    - I'm lookin to order food. Wat should I do?
+    - Could I make purchasses from your menu?
+    - What's the procedurs for ordering?
+    - I'm interestng in make an order. How does it work?
+
 - intent: place_order
   examples: |
     - I want to order [quantity] [dish] with [special_request]
@@ -159,47 +178,52 @@ nlu:
 
 - intent: user_info
   examples: |
-    - My name is [user_name] and I want delivery to [delivery_address]
-    - I'm [user_name] and I need the food delivered to [delivery_address]
-    - [user_name] here, and I'd like the delivery to [delivery_address]
-    - I want to provide my name as [user_name] and the delivery address is [delivery_address]
-    - For delivery, my name is [user_name] and the address is [delivery_address]
-    - I need the food delivered to [delivery_address] for [user_name]
-    - [user_name] is my name, and I prefer delivery to [delivery_address]
-    - I'm [user_name] and the delivery should be to [delivery_address]
-    - Deliver to [delivery_address] with the name [user_name]
-    - [user_name] wants delivery at [delivery_address]
+    - My name is [user_name].
+    - I'm [user_name].
+    - [user_name] here.
+    - I want to provide my name as [user_name].
+    - For delivery, my name is [user_name].
+    - [user_name] is my name.
+    - I'm [user_name].
+    - My name is [user_name].
+    - I'm [user_name].
+    - [user_name] here.
+    - I want to provid my name as [user_name].
+    - For delivery, my name is [user_name].
+    - [user_name] is my name.
+    - I'm [user_name].
+    - Deliver with the name [user_name].
+    - [user_name] wants deliveri.
+
+- intent: delivery
+  examples: |
+    - I'd like delivery to [delivery_address].
+    - I'm planning to order delivery to [delivery_address] this evening.
+    - Can you deliver the food to [(delivery_address]?
+    - I want the meal delivered to [delivery_address].
+    - I'd prefer the meal to be delivered to [delivery_address].
+    - Please send the meal to [delivery_address].
+    - I'm considering delivery to [delivery_address] for dinner.
+    - I'd like delivery to [delivery_address].
+    - I'm planning to order delivery to [delivery_address] this evening.
+    - Can you deliver the food to [delivery_address]? 
+    - I want the meal delivered to [delivery_address].
+    - I'd prefar the meal to be delivered to [delivery_address].
+    - Please send the mal to [delivery_address].
+    - I'm considering delivery to [delivery_address] for dinr. 
 
 - intent: meal_availability
   examples: |
-    - What meals are available for me?
-    - Can I see the dishes I can order, [user_name]?
-    - Tell me what's on the menu for [user_name].
-    - Are there any special meals available for me?
-    - Can you recommend dishes for [user_name] to order?
-    - What meals are currently available for [user_name]?
-    - Tell me about the availability of dishes for [user_name].
-    - Are there any personalized meal options for me?
-    - What can I order right now, [user_name]?
-    - Can you suggest a meal for [user_name]?
-    - What's on the menu for [user_name] to order?
-    - Are there any customized meals available for [user_name]?
-    - Tell me what [user_name] can order.
-    - What meals are availble for me?
-    - Can I see the dishes I can ordr, [user_name]?
-    - Tell me what's on the menue for [user_name].
-    - Are there any special meals availabe for me?
-    - Can you recommed dishes for [user_name] to ordr?
-    - What meals are currently availble for [user_name]?
-    - Tell me about the availablity of dishs for [user_name].
-    - Are there any personalized meal options for me?
-    - What can I ordr right now, [user_name]?
-    - Can you suggest a meal for [user_name]?
-    - What's on the menue for [user_name] to ordr?
-    - Are there any customized meals availabe for [user_name]?
-    - Tell me what [user_name] can ordr.
-    - What meals are availabel for me right noww?
-    - Can I see the dishs I can order, [user_name]? withot typos
-    - Tell me what's on the menu for [user_name] to order?
-    - Are there any special meals available for me?
-    - Can you recommend dishes for [user_name] to order?
+    - Is a meal for [user_name] available?
+    - Can you tell me if [user_name] can get a meal right now?
+    - Can I check if a meal for [user_name] is available?
+    - Is a meal for [user_name] available?
+    - Can you tell me if [user_name] can get a meal right now?
+    - Can I check if a meal for [user_name] is avaliable?  # Intentional typo in 'available'.
+    - Is there something on the menu for [user_name]? Can they order now?
+    - Can you tell me if [user_name] can get a meal right now? How about availability?
+    - Can I check if a meal for [user_name] is available? What's on the menu?
+    - Is a meal for [user_name] avaliable?  # Intentional typo in 'available'.
+    - Can you tell me if [user_name] can get a meal right now? Any options for them?
+    - Can I check if a meal for [user_name] is available? Is it on the menu?
+    - Is there something on the menu for [user_name]? Can they get a meal?

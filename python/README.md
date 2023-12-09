@@ -26,6 +26,20 @@ python -m rasa run
 
 Open telegram and start writing messages.
 
+# Training
+
+To train your intentions use
+```powershell
+python -m rasa train
+```
+
+# Use custom actions endpoints
+
+To use custom actions run below command to start custom actions server
+```powershell
+python -m rasa run actions --endpoints endpoints.yml
+```
+
 # Requirements
 
 - W10

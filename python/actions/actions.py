@@ -1,7 +1,6 @@
-import datetime
+from datetime import datetime
 import json
 import setup
-
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
@@ -22,6 +21,13 @@ from const import (
     _PLACE_ORDER_QUANTITY,
     _PLACE_ORDER_SPECIAL_REQUEST,
     _PLACE_ORDER_DISH,
+    _SLOT_USER_NAME,
+    _SLOT_DELIVERY_ADDRESS,
+    _SLOT_QUANTITY,
+    _SLOT_DISH,
+    _SLOT_SPECIAL_REQUEST,
+    _SLOT_DATE,
+    _SLOT_DAY,
 )
 from db import OrderDatabase
 
@@ -47,13 +53,13 @@ class ActionOpenHours(Action):
                 encoding="utf-8"
             ) as file:
                 opening_hours=json.load(file)
-                day = tracker.get_slot()
+                day = tracker.get_slot(_SLOT_DAY)
                 
                 if current_day in opening_hours[_ITEMS]:
                     close_open = opening_hours[_ITEMS][day]
                     
                     if close_open[_OPEN] <= current_time <= close_open[_CLOSE]:
-                        message = 'The restaurant is currently open'
+                        message = 'The restaurant is open'
                     else:
                         message = "The restaurant is closed now. It opens at {} and closes at {} on {}.".format(
                             close_open[_OPEN], close_open[_CLOSE], current_day.capitalize()
@@ -106,9 +112,12 @@ class ActionPlaceOrder(Action):
     ) -> List[Dict[Text, Any]]:
         try:
             message = ""
-            quantity = tracker.get_slot(_PLACE_ORDER_QUANTITY)
-            dish_name = tracker.get_slot(_PLACE_ORDER_DISH)
-            special_request = tracker.get_slot(_PLACE_ORDER_SPECIAL_REQUEST)
+            quantity = tracker.get_slot(_SLOT_QUANTITY)
+            dish_name = tracker.get_slot(_SLOT_DISH)
+            special_request = tracker.get_slot(_SLOT_SPECIAL_REQUEST)
+            user = tracker.get_slot(_SLOT_USER_NAME)
+            delivery_address = tracker.get_slot(_SLOT_DELIVERY_ADDRESS)
+            
             
             if not quantity or not dish_name:
                 message = "Sorry, I couldn't retrieve the necessary information to place the order."
@@ -135,14 +144,14 @@ class ActionPlaceOrder(Action):
             
             order = Order(
                 id=None,
-                name=tracker.get_slot(_USER_INFO_NAME),  # Assuming the user's ID is used as the name
+                name=tracker.get_slot(_USER_INFO_NAME), 
                 dish_name=dish_name,
-                price=item[_MENU_PRICE],  # Replace with the actual price
+                price=item[_MENU_PRICE],
                 special_requests=special_request,
                 quantity=quantity,
-                created_date=current,  # Automatically set by the database
-                delivery_address=tracker.get_slot(_PLACE_ORDER_ORDER_TYPE),  # Assuming a delivery scenario
-                preparation_time=item[_MENU_PREPARATION_TIME]  # Replace with the actual preparation time
+                created_date=current, 
+                delivery_address=tracker.get_slot(_PLACE_ORDER_ORDER_TYPE), 
+                preparation_time=item[_MENU_PREPARATION_TIME],
             )
             
             db = OrderDatabase(setup.db_path)

@@ -1,7 +1,9 @@
-from models import (
+from io import StringIO
+from const import (
     _MENU_NAME,
     _MENU_PRICE,
     _MENU_PREPARATION_TIME,
+    _ITEMS,
 )
 
 class RestaurantMenu:
@@ -12,13 +14,13 @@ class RestaurantMenu:
         self.menu = menu
         
     def menu_as_string(
-        self,
-        dishes
+        self,ha
     ) -> str:
-        text = ""
-        for index, item in enumerate(dishes, start=1):
-            text += f'Position {index} Dish: {item[_MENU_NAME]} Price: {item[_MENU_PRICE]} Preparation time: {item[_MENU_PREPARATION_TIME]}' 
-        return text.strip()
+        buffer = StringIO()
+        positions = self.menu[_ITEMS]
+        for index, item in enumerate(positions):
+            buffer.write(f'Position {index} \t Dish: {item[_MENU_NAME]} \t Price: {item[_MENU_PRICE]}$ \t Preparation time: {self._to_minutes(item[_MENU_PREPARATION_TIME])}min\n')
+        return buffer.getvalue()
     
     def get_item_by_dish(
         self, 
@@ -28,6 +30,12 @@ class RestaurantMenu:
             if item[self._MENU_NAME].lower() == dish_name.lower():
                 return item
         return None
+    
+    def _to_minutes(
+        self,
+        hours
+    ) -> float:
+        return hours * 60
     
 class Order:
     id: int

@@ -7,7 +7,8 @@ class OrderDatabase:
     def __init__(self, db_path):
         self.conn = sqlite3.connect(db_path)
 
-    def insert_order(self, 
+    def insert_order(
+        self, 
         order: Order
     ) -> None:
         order.created_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
