@@ -30,88 +30,14 @@ nlu:
     - bye bye
     - see you later
 
-- intent: affirm
-  examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
-
-- intent: deny
-  examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
-
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
-
 - intent: open_hours
   examples: |
-    - Can you tell me if the restaurant is open on [day]?
-    - What are the operating hours for the restaurant on [day]?
-    - Is the restaurant open for business on [day]?
-    - Could you inform me about the opening hours on [day]?
-    - I'm curious if the restaurant operates on [day]?
-    - What's the schedule for the restaurant on [day]?
-    - Is the restaurant available for customers on [day]?
-    - Are there any restrictions to access the restaurant on [day]?
-    - Can you check if the restaurant is open this [day]?
-    - What time does the restaurant open on [day]?
-    - Can you tell me if the restaurant is opn on [day]? 
-    - What are the operatng hours for the restaurant on [day]?  
-    - Is the restaurant open for bussiness on [day]?  
-    - Could you inform me about the opening hurs on [day]? 
-    - I'm curious if the restaurant operates on [day]? 
-    - What's the schedule for the restaurant on [day]?
-    - Is the restaurant available for customers on [day]?
-    - Are there any restrictons to access the restaurant on [day]?
-    - Can you check if the restaurant is open this [day]?
-    - What time does the restaurant open on [day]?
+    - Is the restaurant open on [Saturday](day)?
+    - What are the hours on [Monday](day)?
+    - Is restaurant open on [Friday](day)?
+    - What are te hours on [Wednesday](day)?
+    - Is the restaurant open right now?
+    - Is restaunt open?
 
 - intent: menu
   examples: |
@@ -136,64 +62,55 @@ nlu:
     - Provide details about the available dishes
     - Display the mnue, pleas
 
-- intent: place_order_start
-  examples: |
-    - I would like to make an order.
-    - Can I place an order?
-    - How do I start the ordering process?
-    - I want to order something.
-    - Is it possible to make an order right now?
-    - What are the steps to place an order?
-    - How do I begin the ordering process?
-    - I'm looking to order food. What should I do?
-    - Could I make a purchase from your menu?
-    - What's the procedure for ordering?
-    - I'm interested in making an order. How does it work?
-    - I would like to make an ordr.
-    - Can I plae an order?
-    - How do I start the ordering proces?
-    - I want to oder something!
-    - Is it possible to make an ordes right now?
-    - What are the steps to placing an oder?
-    - How do I begining the ordering process?
-    - I'm lookin to order food. Wat should I do?
-    - Could I make purchasses from your menu?
-    - What's the procedurs for ordering?
-    - I'm interestng in make an order. How does it work?
-
 - intent: place_order
   examples: |
-    - I want to order [quantity] [dish] with [special_request]
-    - Can I order [quantity] [dish] without [special_request]
-    - Order [quantity] of [dish] with special request: [special_request]
-    - I want to order [quantity] [dish] with [special_request]
-    - Can I order [quantity] [dish] withuot [special_request]
-    - Order [quantity] of [dish] with speciaal request: [special_request]
-    - I want to order [quantity] [dish] with [special_request]
-    - Can I order [quantity] [dish] without [special_request]
-    - Order [quantity] of [dish] with special request: [special_request]
-    - I want to order [quantity] [dish] withot [special_request]
-    - Can I order [quantity] [dish] without special request
-    - Order [quantity] of [dish] with special requet: [special_request]
+    - I'd like to order [2](quantity) [Spaghetti](dish) with [extra cheese](special_requests).
+    - I would like to order [1](quantity) [Soup](dish) with [pepper](special_requests)
+    - Can I get [12](quantity) order of [Pizza](dish) with [no onions](special_requests), please?
+    - I would like to order [1](quantity) [Soup](dish) without [pepper](special_requests)
+    - I would like to rder [1](quantity) [Soup](dish) without [pepper](special_requests)
+    - I'd like to order [2](quantity) [Spaghetti](dish)
+    - I would like to order [1](quantity) [Soup](dish)
+    - Can I get [12](quantity) order of [Pizza](dish), please?
+    - I would like to order [1](quantity) [Soup](dish) without [pepper](special_requests)
+    - I would like to rder [1](quantity) [Soup](dish) without [pepper](special_requests)
+    - Order [3](quantity) servings of [Burger](dish) and add [extra ketchup](special_requests).
+    - I want to get [1](quantity) [Sushi](dish) with [soy sauce on the side](special_requests).
+    - [1](quantity) order of [Salad](dish) with [dressing on the side](special_requests), please.
+    - Please prepare [3](quantity) [Pasta](dish) with [no mushrooms](special_requests).
+    - I'd like to oder [2](quantity) [Spaghetti](dish) with [extra cheese](special_requests).
+    - Can I gest [1](quantity) order of [Pizza](dish) with [no onions](special_requests), please?
+    - Order [3](quantity) servngs of [Burger](dish) and add [extra ketchup](special_requests).
+    - I wan to get [2](quantity) [Sushi](dish) with [soy sauce on the side](special_requests).
+    - [1](quantity) order of [Salad](dish) wth [dressing on the side](special_requests), please.
+    - Please prpare [3](quantity) [Cheesburger](dish) with [no mushrooms](special_requests).
+    - I'd like to order [2](quantity) [Cheese](dish) without [cheese](special_requests).
+    - I like to order [2](quantity) [Tomatos](dish) without [cheese](special_requests).
+    - I would like to order [1](quantity) [Soup](dish).
+    - Can I get [two](quantity) orders of [Soup](dish), please?
+    - Order [3](quantity) servings of [Soup](dish).
+    - I want to get [1](quantity) [Tomato Soup](dish).
+    - [2](quantity) order of [Mushroom Soup](dish), please.
+    - Please prepare [3](quantity) [Chicken Soup](dish).
 
 - intent: user_info
   examples: |
-    - My name is [user_name].
-    - I'm [user_name].
-    - [user_name] here.
-    - I want to provide my name as [user_name].
-    - For delivery, my name is [user_name].
-    - [user_name] is my name.
-    - I'm [user_name].
-    - My name is [user_name].
-    - I'm [user_name].
-    - [user_name] here.
-    - I want to provid my name as [user_name].
-    - For delivery, my name is [user_name].
-    - [user_name] is my name.
-    - I'm [user_name].
-    - Deliver with the name [user_name].
-    - [user_name] wants deliveri.
+    - [Patryk](user_name)
+    - My name is [Patryk](user_name).
+    - I'm [Arek](user_name).
+    - [Marek](user_name) here.
+    - I want to provide my name as [Darek](user_name).
+    - For delivery, my name is [Tomek](user_name).
+    - [Mariusz](user_name) is my name.
+    - I'm [Anna](user_name).
+    - My name is [Joanna](user_name).
+    - I'm [Kasia](user_name).
+    - [Martyna](user_name) here.
+    - I want to provid my name as [Gabriela](user_name).
+    - For delivery, my name is [Ula](user_name).
+    - [Leokadia](user_name) is my name.
+    - I'm [Miłosz](user_name).
+    - Deliver with the name [Gabriel](user_name).
 
 - intent: delivery
   examples: |
@@ -211,6 +128,12 @@ nlu:
     - I'd prefar the meal to be delivered to [delivery_address].
     - Please send the mal to [delivery_address].
     - I'm considering delivery to [delivery_address] for dinr. 
+    - I will pick up at the restaurant
+    - Please have my order ready for pickup.
+    - I prefer to pick up my meal at the restaurant.
+    - I will pic up at the restaurnt
+    - Pease have my order ready for pickup.
+    - I preer to pick up my meal at the restaurant.
 
 - intent: meal_availability
   examples: |
@@ -219,11 +142,10 @@ nlu:
     - Can I check if a meal for [user_name] is available?
     - Is a meal for [user_name] available?
     - Can you tell me if [user_name] can get a meal right now?
-    - Can I check if a meal for [user_name] is avaliable?  # Intentional typo in 'available'.
-    - Is there something on the menu for [user_name]? Can they order now?
-    - Can you tell me if [user_name] can get a meal right now? How about availability?
+    - Can I check if a meal for [user_name] is avaliable? 
+    - Is there something on the menu for [user_name]?
+    - Can you tell me if [user_name] can get a meal right now?
     - Can I check if a meal for [user_name] is available? What's on the menu?
-    - Is a meal for [user_name] avaliable?  # Intentional typo in 'available'.
-    - Can you tell me if [user_name] can get a meal right now? Any options for them?
-    - Can I check if a meal for [user_name] is available? Is it on the menu?
-    - Is there something on the menu for [user_name]? Can they get a meal?
+    - Is a meal for [user_name] avaliable? 
+    - Can you tell me if [user_name] can get a meal right now?
+    - Can I check if a meal for [user_name] is available?

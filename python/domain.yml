@@ -3,27 +3,31 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
   - menu
   - open_hours
   - place_order
   - meal_availability
   - user_info
+  - delivery
+  - greet_order
+  - place_order_simple
 
 entities:
+  - day
   - user_name
+  - order_type
   - delivery_address
   - quantity
   - dish
-  - special_request
-  - date
-  - day
+  - special_requests
 
 slots:
+  day:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: day
   user_name:
     type: text
     influence_conversation: true
@@ -48,44 +52,16 @@ slots:
     mappings:
       - type: from_entity
         entity: dish
-  special_request:
+  special_requests:
     type: text
     influence_conversation: true
     mappings:
       - type: from_entity
-        entity: special_request
-  date:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: date
-  day:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: day
+        entity: special_requests
 
 responses:
   utter_greet:
   - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
 
   utter_order_meal:
   - text: "Sure, let's get started with your order. What would you like to have today?"
@@ -93,10 +69,10 @@ responses:
   utter_user_info:
   - text: "May I know your name, please?"
 
-  utter_user_delivery_type:
-  - text: "How would you like your order to be delivered? We offer options such as home delivery, takeout, and curbside pickup. What's your preference?"
+  utter_order_type:
+  - text: "How would you like your order to be delivered? We offer options such as home delivery and takeout. What's your preference?"
 
-  utter_user_address: 
+  utter_delivery_address: 
   - text: "To assist you better, could you please provide your delivery address?"
 
 actions:

@@ -2,64 +2,103 @@ version: "3.1"
 
 stories:
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
-
-- story: open_hours
+- story: open hours story
   steps:
     - intent: greet
     - action: utter_greet
     - intent: open_hours
+    - slot_was_set:
+        - day: true
     - action: action_open_hours
+    - intent: goodbye
+    - action: action_restart
   
-- story: menu
+- story: menu story
   steps:
     - intent: greet
     - action: utter_greet
     - intent: menu
     - action: action_list_menu
+    - intent: goodbye
+    - action: action_restart
 
-- story: place_order
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: place_order_start
-    - action: utter_user_info
-    - intent: user_info
-    - action: utter_user_delivery_type
-    - intent: 
-    - action: utter_
-    - intent: place_order
-    - action: action_place_order
-
-  
-- story: meal_availability
+- story: meal availability story
   steps:
     - intent: greet
     - action: utter_greet
     - intent: meal_availability
     - action: action_meal_availability
+    - intent: goodbye
+    - action: action_restart
+
+- story: place order story 1
+  steps: 
+    - intent: greet
+    - action: utter_greet
+    - intent: place_order
+    - slot_was_set:
+      - dish: true
+      - quantity: true
+      - special_requests: true
+    - action: utter_user_info
+    - intent: user_info
+    - slot_was_set:
+      - user_name: true
+    - action: action_place_order
+    - intent: goodbye
+    - action: action_restart
+
+- story: place order story 2
+  steps: 
+    - intent: greet
+    - action: utter_greet
+    - intent: place_order_simple
+    - slot_was_set:
+      - dish: true
+      - quantity: true
+    - action: utter_user_info
+    - intent: user_info
+    - slot_was_set:
+      - user_name: true
+    - action: action_place_order
+    - intent: goodbye
+    - action: action_restart
+
+
+#     - story: place order story 1
+#   steps: 
+#     - intent: greet
+#     - action: utter_greet
+#     - intent: place_order
+#     - slot_was_set:
+#       - dish: true
+#       - quantity: true
+#       - special_requests: true
+#     - action: utter_user_info
+#     - intent: user_info
+#     - slot_was_set:
+#       - user_name: true
+#     - action: utter_order_type
+#     - intent: delivery
+#     - slot_was_set: 
+#       - delivery_address: true
+#     - action: action_place_order
+#     - intent: goodbye
+#     - action: action_restart
+
+# - story: place order story 2
+#   steps: 
+#     - intent: greet
+#     - action: utter_greet
+#     - intent: place_order
+#     - slot_was_set:
+#       - dish: true
+#       - quantity: true
+#       - special_requests: true
+#     - action: utter_user_info
+#     - intent: user_info
+#     - slot_was_set:
+#       - user_name: true
+#     - action: action_place_order
+#     - intent: goodbye
+#     - action: action_restart

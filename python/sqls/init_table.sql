@@ -8,6 +8,5 @@ CREATE TABLE "order" (
 	"created_date"	TEXT NOT NULL,
 	"delivery_address"	TEXT,
 	"preparation_time"	INTEGER,
-	"delivery_type"	TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
