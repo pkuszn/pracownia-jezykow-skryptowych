@@ -68,12 +68,6 @@ nlu:
     - I would like to order [1](quantity) [Soup](dish) with [pepper](special_requests)
     - Can I get [12](quantity) order of [Pizza](dish) with [no onions](special_requests), please?
     - I would like to order [1](quantity) [Soup](dish) without [pepper](special_requests)
-    - I would like to rder [1](quantity) [Soup](dish) without [pepper](special_requests)
-    - I'd like to order [2](quantity) [Spaghetti](dish)
-    - I would like to order [1](quantity) [Soup](dish)
-    - Can I get [12](quantity) order of [Pizza](dish), please?
-    - I would like to order [1](quantity) [Soup](dish) without [pepper](special_requests)
-    - I would like to rder [1](quantity) [Soup](dish) without [pepper](special_requests)
     - Order [3](quantity) servings of [Burger](dish) and add [extra ketchup](special_requests).
     - I want to get [1](quantity) [Sushi](dish) with [soy sauce on the side](special_requests).
     - [1](quantity) order of [Salad](dish) with [dressing on the side](special_requests), please.
@@ -86,12 +80,15 @@ nlu:
     - Please prpare [3](quantity) [Cheesburger](dish) with [no mushrooms](special_requests).
     - I'd like to order [2](quantity) [Cheese](dish) without [cheese](special_requests).
     - I like to order [2](quantity) [Tomatos](dish) without [cheese](special_requests).
-    - I would like to order [1](quantity) [Soup](dish).
-    - Can I get [two](quantity) orders of [Soup](dish), please?
-    - Order [3](quantity) servings of [Soup](dish).
-    - I want to get [1](quantity) [Tomato Soup](dish).
-    - [2](quantity) order of [Mushroom Soup](dish), please.
-    - Please prepare [3](quantity) [Chicken Soup](dish).
+
+- intent: place_order_simple
+  examples: |
+    - I would like to order [1](quantity) [Soup](dish)
+    - Can I get [two](quantity) orders of [Soup](dish) ?
+    - Order [3](quantity) servings of [Soup](dish)
+    - I want to get [1](quantity) [Tomatoes](dish)
+    - [2](quantity) order of [Soup](dish)
+    - Please prepare [3](quantity) [Chicken](dish)
 
 - intent: user_info
   examples: |

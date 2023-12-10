@@ -159,7 +159,7 @@ class ActionPlaceOrder(Action):
             current = datetime.now()
             
             price = int(quantity) * int(item[_MENU_PRICE])   
-            preparation_time = int(quantity) * int(item[_MENU_PREPARATION_TIME])         
+            preparation_time = item[_MENU_PREPARATION_TIME]     
             order = Order(
                 id=None,
                 name=user, 
