@@ -6,7 +6,7 @@
 | Language | Project name | Status | 
 |----------|--------------|--------|
 |Bash|Tic Toe| :heavy_check_mark: |   
-|Python|| :soon: |   
+|Python|Rasa chatbot restaurant| :heavy_check_mark: |   
 |JavaScript|| :soon: | 
 |Lua|| :soon: | 
 |Ruby|| :soon: | 
