@@ -1,8 +1,17 @@
-import user from "../controllers/user.js";
-import {Router} from "router";
+import user from "../controllers/userController.js";
+import express from "express";
 
-var router = Router();
+const router = express.Router();
 
-module.exports = () => {
-    router.get("/")
-}
+router.route('/')
+    .get(user.getUsers)
+    .post(user.postUser);
+
+router.route('/:id')
+    .get(user.getUser)
+    .put(user.putUser)
+    .delete(user.deleteUser);
+
+export default router;
+
+    

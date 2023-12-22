@@ -1,8 +1,17 @@
-import purchase from "../controllers/purchase.js";
-import {Router} from "router";
+import purchase from "../controllers/purchaseController.js";
+import express from "express";
 
-var router = Router();
+const router = express.Router();
 
-module.exports = () => {
-    router.get("/")
-}
+router.route('/')
+    .get(purchase.getPurchases)
+    .post(purchase.postPurchase);
+
+router.route('/:id')
+    .get(purchase.getPurchase)
+    .put(purchase.putPurchase)
+    .delete(purchase.deletePurchase);
+
+export default router;
+
+    

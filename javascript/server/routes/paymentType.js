@@ -1,8 +1,12 @@
-import paymentType from "../controllers/paymentType.js";
-import {Router} from "router";
+import paymentType from "../controllers/paymentTypeController.js";
+import express from "express";
 
-var router = Router();
+const router = express.Router();
 
-module.exports = () => {
-    router.get("/")
-}
+router.route('/')
+    .get(paymentType.getPaymentTypes);
+
+router.route('/:id')
+    .get(paymentType.getPaymentType);
+
+export default router;

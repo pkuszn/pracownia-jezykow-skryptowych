@@ -1,8 +1,12 @@
-import deliveryType from "../controllers/deliveryType.js";
-import {Router} from "router";
+import deliveryType from "../controllers/deliveryTypeController.js";
+import express from "express";
 
-var router = Router();
+const router = express.Router();
 
-module.exports = () => {
-    router.get("/")
-}
+router.route('/')
+    .get(deliveryType.getDeliveryTypes);
+
+router.route('/:id')
+    .get(deliveryType.getDeliveryType);
+
+export default router;
