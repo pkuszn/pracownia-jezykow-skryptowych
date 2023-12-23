@@ -10,7 +10,9 @@ import errorHandler from './middleware/errorHandler.js';
 import cors from 'cors';
 
 const app = express();
-const port = 3000;
+const port = 6001;
+
+app.set('port', port);
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());

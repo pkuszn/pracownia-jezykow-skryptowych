@@ -28,6 +28,19 @@ const getProducts = expressAsyncHandler(async(req, res) => {
     })
 });
 
+const getProductsByCategory = expressAsyncHandler(async(req, res) => {
+    let sql = `SELECT * FROM product where category = ?`;
+    let params = [req.params.id];
+    db.all(sql, params, (err, row) => {
+        if (err) {
+            res.status(400).json({"error": err.message});
+            return;
+        }
+
+        res.status(200).json(row);
+    });
+})
+
 const postProduct = expressAsyncHandler(async(req, res) => {
     let sql = `INSERT INTO product (name, category, price, created_date, description, available) VALUES (?, ?, ?, ?, ?, ?);`
     let params = [
@@ -89,5 +102,6 @@ export default {
     getProducts,
     postProduct,
     putProduct,
-    deleteProduct
+    deleteProduct,
+    getProductsByCategory
 };

@@ -12,4 +12,7 @@ router.route('/:id')
     .put(product.putProduct)
     .delete(product.deleteProduct);
 
+router.route('/category/:id')
+    .get(product.getProductsByCategory);
+
 export default router;
