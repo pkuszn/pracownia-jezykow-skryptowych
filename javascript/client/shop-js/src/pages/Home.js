@@ -4,7 +4,9 @@ import Dropdown from '../components/Navigation/Dropdown'
 const Home = () => {
   return (
     <div>
-      <Dropdown></Dropdown>
+      <Dropdown>
+        
+      </Dropdown>
     </div>
   )
 }

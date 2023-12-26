@@ -1,7 +1,13 @@
 import React from "react";
 import { categoryMapper } from "../../utility/utils";
-
+import { useBasket } from "../../contexts/BasketContext";
 const Element = ({ product }) => {
+    const { dispatch } = useBasket();
+
+    const addToBasketHandler = (product) => {
+        dispatch({ type: "ADD_TO_BASKET", payload: product });
+    };
+
     return (
         <div className="product-card">
             <div className="product-details">
@@ -15,8 +21,23 @@ const Element = ({ product }) => {
                 </p>
             </div>
             <div className="product-card-footer">
-                    <p>Available: {product.available ? "Yes" : "No"}</p>
-                    <button class='product-button'>Add to basket</button>
+                <p>Available: {product.available ? "Yes" : "No"}</p>
+                <input
+                    type="text"
+                    value="1"
+                    className="product-quantity"
+                    placeholder="Quantity"
+                ></input>
+                {product.available ? (
+                    <button
+                        className="product-button"
+                        onClick={() => addToBasketHandler(product)}
+                    >
+                        Add to basket
+                    </button>
+                ) : (
+                    <div className="product-button">Add to basket</div>
+                )}
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ export class purchase {
     quantity;
     purchase_date;
     delivery_type;
+    payment_type;
 
     constructor(
         id,
@@ -14,7 +15,8 @@ export class purchase {
         price,
         quantity,
         purchase_date,
-        delivery_type
+        delivery_type,
+        payment_type
     ) {
         this.id = id;
         this.id_product = id_product;
@@ -23,5 +25,6 @@ export class purchase {
         this.quantity = quantity;
         this.purchase_date = purchase_date;
         this.delivery_type = delivery_type;
+        this.payment_type = payment_type;
     }
 }

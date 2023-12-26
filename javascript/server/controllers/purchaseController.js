@@ -1,5 +1,11 @@
 import expressAsyncHandler from "express-async-handler";    
 import db from '../config/db.js';
+import { PurchaseService } from "../services/purchaseService.js";
+import { UserService } from "../services/userService.js";
+import { purchase } from "../models/purchase.js";
+
+const purchaseService = new PurchaseService();
+const userService = new UserService();
 
 const getPurchase = expressAsyncHandler(async(req, res) => {
     let params = [req.params.id];
@@ -36,7 +42,8 @@ const postPurchase = expressAsyncHandler(async(req, res) => {
         req.body.price,
         req.body.quantity,
         req.body.purchaseDate,
-        req.body.deliveryType
+        req.body.deliveryType,
+        req.body.paymentType,
     ];
 
     db.run(sql, params, (err) => {
@@ -57,6 +64,7 @@ const putPurchase = expressAsyncHandler(async(req, res) => {
         req.body.quantity,
         req.body.purchaseDate,
         req.body.deliveryType,
+        req.body.paymentType,
         req.params.id
     ];
 
@@ -84,10 +92,50 @@ const deletePurchase = expressAsyncHandler(async(req, res) => {
     })
 });
 
+const getPurchaseByName = expressAsyncHandler(async(req, res) => {
+    let userRequest = {
+        "name": req.params.name
+    };
+
+    let userResponse = userService.getUserByName(userRequest);
+    
+    if (userResponse.status !== 200) {
+        res.status(userResponse.status).json({"error": userResponse.message});
+        return;
+    }
+
+    let user = userResponse.data;
+
+    let purchaseRequest = {
+        "id_user": user.id 
+    };
+
+    let purchaseResponse = purchaseService.getPurchaseByUser(purchaseRequest);
+    
+    if (purchaseResponse.status !== 200) {
+        res.status(purchaseResponse.status).json({"error": purchaseResponse.message});
+        return;
+    }
+
+    return res.status(purchaseResponse.status).json(purchaseResponse.data);
+})
+
+const makeOrder = expressAsyncHandler(async(req, res) => {
+    let orderResponse = purchaseService.makeOrder(request);
+    
+    if (orderResponse.status !== 200) {
+        res.status(orderResponse.status).json({"error": orderResponse.message});
+    } else {
+        res.status(orderResponse.status).json(orderResponse.data);
+    }
+})
+
 export default {
     getPurchase,
     getPurchases,
     postPurchase,
     putPurchase,
     deletePurchase,
+    getPurchaseByName,
+    makeOrder
 };

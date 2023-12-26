@@ -12,6 +12,12 @@ router.route('/:id')
     .put(purchase.putPurchase)
     .delete(purchase.deletePurchase);
 
+router.route('/user')
+    .post(purchase.getPurchaseByName);
+
+router.route('/order')
+    .post(purchase.makeOrder)
+
 export default router;
 
     

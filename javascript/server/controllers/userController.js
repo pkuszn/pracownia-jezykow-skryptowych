@@ -1,5 +1,8 @@
 import expressAsyncHandler from "express-async-handler";    
 import db from "../config/db.js";
+import { UserService } from "../services/userService.js";
+
+const userService = new UserService();
 
 const getUser = expressAsyncHandler(async(req, res) => {
     let params = [req.params.id];
@@ -33,6 +36,7 @@ const postUser = expressAsyncHandler(async(req, res) => {
     let params = [
         req.body.name,
         req.body.surname,
+        req.body.password,
         req.body.address,
         req.body.createdDate,
     ];
@@ -51,6 +55,7 @@ const putUser = expressAsyncHandler(async(req, res) => {
     let params = [
         req.body.name,
         req.body.surname,
+        req.body.password,
         req.body.address,
         req.body.createdDate,
         req.params.id
@@ -80,10 +85,41 @@ const deleteUser = expressAsyncHandler(async(req, res) => {
     })
 });
 
+const checkUser = expressAsyncHandler(async(req, res) => {
+    let request = {
+        name: req.body.name,
+        password: req.body.password
+    };
+
+    let response = userService.checkUser(request);
+    
+    if (response.status !== 200) {
+        return res.status(response.status).json("Couldn't find user.", response.message);
+    }
+
+    return res.status(response.status).json(response.data);
+});
+
+const getUserByName = expressAsyncHandler(async(req, res) => {
+    let request = {
+        name: req.body.name
+    };
+
+    let response = userService.getUserByName(request);
+
+    if (response.status !== 200) {
+        return res.status(response.status).json("Couldn't find user.", response.message);
+    }
+
+    return res.status(response.status).json(response.data);
+})
+
 export default {
     getUser,
     getUsers,
     postUser,
     putUser,
-    deleteUser
+    deleteUser,
+    checkUser,
+    getUserByName
 };

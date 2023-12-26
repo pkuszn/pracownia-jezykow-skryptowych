@@ -15,7 +15,7 @@ INSERT INTO `category` (id, name) VALUES
     (6, "Tea accessories");
 
 INSERT INTO `user` (id, name, surname, address, created_date) VALUES
-    (1, "root", "root", "Zabrze", "2023-12-22T20:44:42Z");
+    (1, "root", "root", "root", "Zabrze", "2023-12-22T20:44:42Z");
 
 INSERT INTO `product` (id, name, category, price, created_date, description, available) VALUES
   (1, "Earl Grey", 1, 5.99, '2023-01-01', 'A classic black tea with bergamot flavor', 1),

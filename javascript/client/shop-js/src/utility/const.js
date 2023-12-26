@@ -6,6 +6,10 @@ const api = {
     paymentType: "payment-type",
     user: "user",
     productsByCategory: "product/category",
+    checkUser: "user/check",
+    getUserByName: "user/name",
+    getPurchasesByName: "purchase/user",
+    makeOrder: "purchase/order",
     address: "http://localhost:6001",
 }
 

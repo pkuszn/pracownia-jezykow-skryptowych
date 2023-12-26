@@ -12,6 +12,12 @@ router.route('/:id')
     .put(user.putUser)
     .delete(user.deleteUser);
 
+router.route('/check')
+    .post(user.checkUser);
+
+router.route('/name')
+    .post(user.getUserByName);
+
 export default router;
 
     
