@@ -19,5 +19,3 @@ router.route('/order')
     .post(purchase.makeOrder)
 
 export default router;
-
-    

@@ -48,14 +48,13 @@
   }
   
   .product-card-footer {
-    margin-top: auto;
-    padding: 15px;
+    padding: 10px;
     background-color: #f8f8f8;
     border-top: 1px solid #ddd;
     border-radius: 0 0 8px 8px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    text-align: center;
   }
   
   .product-card-footer p {
@@ -68,8 +67,28 @@
 
   .product-button{
     width: 40%;
+    height: 33px;
+    align-self: center;
   }
 
-  .product-quantity {
-    width: 40%;
+  #product-quantity {
+    width: 30%;
+    align-self: center;
+    margin-left: 10px;
+  }
+
+  .product-card-add {
+    display: flex;
+    justify-content: space-between;
+    margin-left:5px;
+  }
+  
+  .product-quantity-text {
+    align-self: center;
+    text-align:end;;
+  }
+
+  .product-card-add-quantity {
+    display: flex;
+    flex-direction: row;
   }

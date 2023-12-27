@@ -5,44 +5,73 @@ const getByUser = `SELECT * from purchase where id_user = ?`;
 
 export class PurchaseService {
     getPurchaseByUser(request) {
-        let params = [request.id_user];
-        db.all(getByUser, params, (err, row) => {
-            if (err) {
-                let message = `Coudln't find purchases. Unexpected error.`;
-                return new Response(undefined, 500, message);
-            }
+        return new Promise((resolve, reject) => {
+            let params = [request.id_user];
+            db.all(getByUser, params, (err, row) => {
+                if (err) {
+                    let message = `Coudln't find purchases. Unexpected error.`;
+                    console.log(message);
+                    reject(new Response(undefined, 500, message));
+                    return;
+                }
 
-            let purchases = row;
-            if (purchases === undefined || purchases === "") {
-                let message = `Couldn't find purchases of user with id = ${request.id_user}`;
-                console.log(message);
-                return new Response(undefined, 404, message);
-            }
+                let purchases = row;
+                if (purchases === undefined || purchases === "") {
+                    let message = `Couldn't find purchases of user with id = ${request.id_user}`;
+                    console.log(message);
+                    reject(new Response(undefined, 404, message));
+                    return;
+                }
 
-            return new Response(purchases, 200, undefined);
+                resolve(new Response(purchases, 200, undefined));
+            });
         });
     }
 
     makeOrder(request) {
-        const sql = `INSERT INTO purchase (id_product, id_user, price, quantity, purhcase_date, delivery_type, payment_type) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-        db.serialize(() => {
-            const stmt = db.prepare(sql);
-            request.forEach(row => stmt.run(row));
-            stmt.finalize();
-            db.run('COMMIT', err => {
-                var message;
-                var response;
-                if (err) {
-                    message = 'Error committing transaction'
-                    console.error(message, err.message);
-                    response =  new Response(undefined, 500, message); 
-                } else {
-                    message = "Bulk insert successful.";
-                    console.log(message);
-                    response = new Response(true, 200, message);
+        return new Promise((resolve, reject) => {
+            db.run("BEGIN TRANSACTION", (beginErr) => {
+                if (beginErr) {
+                    reject(
+                        new Error(
+                            `Error beginning transaction: ${beginErr.message}`
+                        )
+                    );
+                    return;
                 }
-                db.close();
-                return response;
+
+                const sql = `INSERT INTO purchase (id_product, id_user, price, quantity, purchase_date, delivery_type, payment_type) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+                const stmt = db.prepare(sql);
+
+                try {
+                    request.forEach((row) => {
+                        stmt.run(row.id_product, row.id_user, row.price, row.quantity, row.purchase_date, row.delivery_type, row.payment_type, (runErr) => {
+                            if (runErr) {
+                                console.error(
+                                    "Error inserting row:",
+                                    runErr.message
+                                );
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.log(error.message);
+                }
+
+                stmt.finalize();
+
+                db.run("COMMIT", (commitErr) => {
+                    if (commitErr) {
+                        reject(
+                            new Error(
+                                `Error committing transaction: ${commitErr.message}`
+                            )
+                        );
+                    } else {
+                        resolve("Bulk insert successful.");
+                    }
+                });
             });
         });
     }

@@ -3,17 +3,21 @@ import "./style.css";
 import { checkUser } from "../../services/userService";
 
 export const Form = () => {
-    //TODO: Fix!
     const userHandler = () => {
-        let user = document.getElementById("username");
-        let password = document.getElementById("password");
+        let user = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
 
-        let userExists = checkUser(user, password);
-        if (userExists) {
-            sessionStorage.setItem('username', user.value);
-        } else {
-            alert("User doesn't exists");
-        }
+        checkUser(user, password)
+            .then((res) => {
+                if (res) {
+                    sessionStorage.setItem('username', user);
+                } else {
+                    alert("User doesn't exists");
+                }
+            })
+            .catch((err) => {
+                alert(err.data);
+            })
     };
 
     return (

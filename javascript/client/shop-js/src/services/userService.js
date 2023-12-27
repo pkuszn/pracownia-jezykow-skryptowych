@@ -6,15 +6,14 @@ import { User } from "../models/user.js";
 const checkUser = async (name, password) => {
     let endpoint = combiner(api.checkUser);
     try {
-        let response = await axios.post(endpoint, {
-            "user": name,
+        const data = {
+            "name": name,
             "password": password
-        });
-        if (response.data) {
-            return response.data.status === 200 ? true : false;
-        } else {
-            return false;
         }
+
+        const response = await axios.post(endpoint, data);
+
+        return response.data;
     } catch(error) {
         console.error("Error during fetching user.", error);
     }

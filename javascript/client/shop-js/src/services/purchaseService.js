@@ -20,7 +20,7 @@ const fetchPurchasesByName = async() => {
 const makeOrder = async(purchases) => {
     let endpoint = combiner(api.makeOrder);
     try {
-        let response = await axios.post(endpoint);
+        let response = await axios.post(endpoint, purchases);
         if (response.data) {
             return response.data
         } else {

@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
-import { useBasket } from "../../contexts/BasketContext";
 import CartItem from "./CartItem.js";
 import { fetchUser } from "../../services/userService.js";
 import { fetchDeliveryType} from "../../services/deliveryTypeService.js";
-import { fetchPaymentTypes } from "../../services/paymentTypeService.js";
+import { fetchPaymentType } from "../../services/paymentTypeService.js";
 import { makeOrder } from "../../services/purchaseService.js";
-import { User } from "../../models/user.js";
 import Details from "./Details.js";
+import { PurchaseDto } from "../../dtos/purchaseDto.js";
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
-    const { state } = useBasket();
-    const [user, setUser] = useState(new User(1, 'root', 'root', 'root', 'Zabrze', '2023-12-22T20:44:42Z'));
+    const [user, setUser] = useState({});
     const [deliveryTypes, setDeliveryTypes] = useState([]);
     const [paymentTypes, setPaymentTypes] = useState([]);
+    const [products, setProducts] = useState([]);
 
     const getTotalPrice = () => {
-        return state.items.reduce(
+        return products.reduce(
             (total, item) => total + item.price * item.quantity,
             0
         );
     };
+
+    const purchaseHandler = () => {
+        const storedDataString = localStorage.getItem('cart');
+        const storedData = storedDataString ? JSON.parse(storedDataString) : [];
+        console.log(storedData);
+        //TODO
+        /*
+        id,
+        name,
+        category,
+        price,
+        quantity
+        */
+        let purchases = storedData.map(p => new PurchaseDto(p.id, p.name, p.category, p.price, p.quantity));
+        console.log(purchases);
+        setProducts(purchases);
+    }
 
     const handleRemoveItem = (itemId) => {
         const updatedCart = cartItems.filter((item) => item.id !== itemId);
@@ -37,44 +53,47 @@ const Cart = () => {
     };
 
     const getUserName = () => {
-        return sessionStorage.getItem("usename");
+        return sessionStorage.getItem("username");
     }
 
     useEffect(() => {
-        // fetchUser(getUserName())
-        //     .then((res) => {
-        //         setUser(res);
-        //     })
-        //     .catch((err) => {
-        //         setUser({});
-        //     })
+        fetchUser(getUserName())
+            .then((res) => {
+                setUser(res);
+                console.log(res);
+            })
+            .catch((err) => {
+                setUser({});
+            })
         fetchDeliveryType()
             .then((res) => {
                 setDeliveryTypes(res);
             })
             .catch((err) => {
                 setDeliveryTypes([]);
+                console.log(err);
             })
-
-        fetchPaymentTypes()
+        fetchPaymentType()
             .then((res) => {
                 setPaymentTypes(res);
+                console.log(res);
             })
             .catch((err) => {
                 setPaymentTypes([]);
+                console.log(err);
             })
+        purchaseHandler();
     }, []);
 
-    //TODO: FIX!!!
     return (
         <div className="cart-container">
             <h2>Shopping Cart</h2>
-            {state.items.map((item) => (
+            {products.map((item) => (
                 <CartItem product={item} />
             ))}
             {cartItems.length === 0 && <p>Your cart is empty.</p>}
             <p className="cart-total">Total Price: ${getTotalPrice()}</p>
-            <Details user={user}>
+            <Details user={user} deliveryTypes={deliveryTypes} paymentTypes={paymentTypes}>
 
             </Details>
             <div className="cart-submit">

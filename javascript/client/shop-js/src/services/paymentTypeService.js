@@ -3,8 +3,8 @@ import { combiner } from "../utility/utils.js";
 import axios from "axios";
 import { PaymentType } from "../models/paymentType.js";
 
-const fetchPaymentTypes = async() => {
-    let endpoint = combiner(api.deliveryType);
+const fetchPaymentType = async() => {
+    let endpoint = combiner(api.paymentType);
     try {
         let response = await axios.get(endpoint);
         if (response.data && Array.isArray(response.data)) {
@@ -18,5 +18,5 @@ const fetchPaymentTypes = async() => {
 }
 
 export {
-    fetchPaymentTypes
+    fetchPaymentType
 }

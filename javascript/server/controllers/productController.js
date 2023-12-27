@@ -11,7 +11,7 @@ const getProduct = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     })
 });
 
@@ -24,7 +24,7 @@ const getProducts = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     })
 });
 
@@ -37,7 +37,7 @@ const getProductsByCategory = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     });
 })
 
@@ -57,7 +57,7 @@ const postProduct = expressAsyncHandler(async(req, res) => {
             return res.status(500).json({"error": err.message});
         }
 
-        res.json({"message": "Data inserted successfully"});
+        return res.json({"message": "Data inserted successfully"});
     })
 });
 
@@ -78,7 +78,7 @@ const putProduct = expressAsyncHandler(async(req, res) => {
             return res.status(500).json({"error": err.message});
         }
 
-        res.status(200).json({"message": "Data updated successfully"});
+        return res.status(200).json({"message": "Data updated successfully"});
     })
 });
 
@@ -93,7 +93,7 @@ const deleteProduct = expressAsyncHandler(async(req, res) => {
             return res.status(500).json({"error": err.message});
         }
 
-        res.status(200).json({"message": "Data deleted successfully"});
+        return res.status(200).json({"message": "Data deleted successfully"});
     })
 });
 

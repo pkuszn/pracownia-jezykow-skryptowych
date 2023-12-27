@@ -11,7 +11,7 @@ const getCategory = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     })
 });
 
@@ -24,7 +24,7 @@ const getCategories = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     })
 });
 

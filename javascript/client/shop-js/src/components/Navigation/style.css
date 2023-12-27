@@ -76,3 +76,15 @@ body, h1, h2, p, ul, li {
   background-color: #3498db;
   color: green;
 }
+
+.ul-nav {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.add-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}

@@ -11,7 +11,7 @@ const getDeliveryType = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     })
 
 });
@@ -25,7 +25,7 @@ const getDeliveryTypes = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     })
 });
 

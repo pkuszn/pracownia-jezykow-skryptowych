@@ -11,7 +11,7 @@ const getPaymentType = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     })
 });
 
@@ -24,7 +24,7 @@ const getPaymentTypes = expressAsyncHandler(async(req, res) => {
             return;
         }
 
-        res.status(200).json(row);
+        return res.status(200).json(row);
     })
 });
 

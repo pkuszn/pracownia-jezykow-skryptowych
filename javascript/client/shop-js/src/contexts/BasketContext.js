@@ -9,6 +9,7 @@ const BasketContext = createContext();
 const basketReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TO_BASKET':
+      addToBasket(state.items);
       return {
         ...state,
         items: [...state.items, action.payload],
@@ -18,6 +19,12 @@ const basketReducer = (state, action) => {
       return state;
   }
 };
+
+const addToBasket = (items) => {
+  const basket = JSON.parse(localStorage.getItem('cart')) || [];
+  basket.push([...items]);
+  localStorage.setItem('cart', JSON.stringify(basket));
+}
 
 export const useBasket = () => {
   return useContext(BasketContext);

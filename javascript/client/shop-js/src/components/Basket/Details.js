@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Details = ({ user, deliveryTypes, paymentTypes}) => {
+const Details = ({user, deliveryTypes, paymentTypes}) => {
     const handleItemClick = (value) => {
         console.log(`Item clicked: ${value}`);
     };
-    //TODO: FIX!!!
+
+    const [selectedOption, setSelectedOption] = useState("");
+
+    const handleSelectChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+
     return (
         <div
             style={{
@@ -41,25 +47,35 @@ const Details = ({ user, deliveryTypes, paymentTypes}) => {
                 <h2>Payment and Delivery</h2>
                 <div>
                     <label htmlFor="paymentMethod">Payment Method:</label>
-                    <select id="paymentMethod" name="paymentMethod">
+                    <select
+                        id="selectOptions"
+                        value={selectedOption}
+                        onChange={handleSelectChange}
+                    >
                         <option value="">Select Payment Method</option>
-                        <option value="creditCard">Credit Card</option>
-                        <option value="paypal">PayPal</option>
+                        {paymentTypes.map((option) => (
+                            <option key={option.id} value={option.name}>
+                                {option.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
                 <div>
-                    <label htmlFor="deliveryMethod">Delivery Method:</label>
-                    <select id="deliveryMethod" name="deliveryMethod">
+                    <label htmlFor="selectOptions">Select Delivery Type:</label>
+                    <select
+                        id="selectOptions"
+                        value={selectedOption}
+                        onChange={handleSelectChange}
+                    >
+                        <option value="">Select Delivery Type</option>
                         {deliveryTypes.map((option) => (
-                            <li
-                                key={option.name}
-                                onClick={() => handleItemClick(option.id)}
-                            >
+                            <option key={option.id} value={option.name}>
                                 {option.name}
-                            </li>
+                            </option>
                         ))}
                     </select>
+                    {selectedOption && <p>Selected Option: {selectedOption}</p>}
                 </div>
             </div>
         </div>
