@@ -1,4 +1,4 @@
-import {api, category} from './const.js'
+import {api, category, deliveryTypes, paymentTypes} from './const.js'
 
 const combiner = (endpoint, args) => {
     let address = api.address;
@@ -34,7 +34,37 @@ const categoryMapper = (idCategory) => {
     }
 }
 
+const deliveryTypeMapper = (name) => {
+    switch (name) {
+        case deliveryTypes.courier: {
+            return 1;
+        }
+        case deliveryTypes.post: {
+            return 2;
+        }
+        default: {
+            return 1;
+        }
+    }   
+}
+
+const paymentTypeMapper = (name) => {
+    switch(name) {
+        case paymentTypes.cashOnDelivery: {
+            return 1;
+        }
+        case paymentTypes.payInAdvance: {
+            return 2;
+        }
+        default: {
+            return 1;
+        }
+    }
+}
+
 export {
     categoryMapper,
-    combiner
+    combiner,
+    deliveryTypeMapper,
+    paymentTypeMapper
 }

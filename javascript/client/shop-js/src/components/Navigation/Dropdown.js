@@ -24,7 +24,7 @@ const Dropdown = () => {
 
     const handleItemClick = (value) => {
         console.log(`Item clicked: ${value}`);
-        <Link to={<Products category={value}/>}></Link>
+        <Link to={<Products category={value} />}></Link>;
     };
 
     return (

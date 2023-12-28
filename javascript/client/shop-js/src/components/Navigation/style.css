@@ -1,38 +1,43 @@
-body, h1, h2, p, ul, li {
-    margin: 0;
-    padding: 0;
-  }
+body,
+h1,
+h2,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
 
-  #topbar {
-    background-color: green;
-    color: #fff; 
-    padding: 10px; 
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-  }
-  
-  #navigation-logo {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  #navigation {
-    list-style: none;
-  }
-  
-  #navigation li {
-    display: inline-block;
-    margin-right: 15px;
-  }
-  
-  #navigation a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
+#topbar {
+  background-color: green;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#navigation-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#navigation {
+  list-style: none;
+}
+
+#navigation li {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+#navigation a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .dropdown-container {
   position: relative;
   display: inline-block;

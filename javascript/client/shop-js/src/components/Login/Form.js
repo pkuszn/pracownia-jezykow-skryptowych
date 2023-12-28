@@ -10,14 +10,14 @@ export const Form = () => {
         checkUser(user, password)
             .then((res) => {
                 if (res) {
-                    sessionStorage.setItem('username', user);
+                    sessionStorage.setItem("username", user);
                 } else {
                     alert("User doesn't exists");
                 }
             })
             .catch((err) => {
                 alert(err.data);
-            })
+            });
     };
 
     return (
@@ -28,7 +28,9 @@ export const Form = () => {
                 <input type="text" id="username" placeholder="Enter username" />
                 <label for="password">Password</label>
                 <input type="text" id="password" placeholder="Enter password" />
-                <button type="submit" onClick={userHandler}>Login</button>
+                <button type="submit" onClick={userHandler}>
+                    Login
+                </button>
             </form>
         </div>
     );

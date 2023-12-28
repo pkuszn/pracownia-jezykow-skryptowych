@@ -22,7 +22,19 @@ const category = {
     teaAccessories: "Tea accessories"
 };
 
+const paymentTypes = {
+    cashOnDelivery: "Cash on delivery",
+    payInAdvance: "Pay in advance"
+}
+
+const deliveryTypes = {
+    courier: "Courier",
+    post: "Post"
+}
+
 export {
     api, 
-    category
+    category,
+    paymentTypes,
+    deliveryTypes
 }

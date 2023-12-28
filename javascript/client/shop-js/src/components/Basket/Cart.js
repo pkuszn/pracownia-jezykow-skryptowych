@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import CartItem from "./CartItem.js";
 import { fetchUser } from "../../services/userService.js";
-import { fetchDeliveryType} from "../../services/deliveryTypeService.js";
+import { fetchDeliveryType } from "../../services/deliveryTypeService.js";
 import { fetchPaymentType } from "../../services/paymentTypeService.js";
 import { makeOrder } from "../../services/purchaseService.js";
 import Details from "./Details.js";
 import { PurchaseDto } from "../../dtos/purchaseDto.js";
+import { Purchase } from "../../models/purchase.js";
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([]);
     const [user, setUser] = useState({});
     const [deliveryTypes, setDeliveryTypes] = useState([]);
     const [paymentTypes, setPaymentTypes] = useState([]);
     const [products, setProducts] = useState([]);
+    const [selectedPaymentType, selectPaymentType] = useState(1);
+    const [selectedDeliveryType, selectDeliveryType] = useState(1);
 
     const getTotalPrice = () => {
         return products.reduce(
@@ -23,38 +25,50 @@ const Cart = () => {
     };
 
     const purchaseHandler = () => {
-        const storedDataString = localStorage.getItem('cart');
+        const storedDataString = localStorage.getItem("cart");
         const storedData = storedDataString ? JSON.parse(storedDataString) : [];
-        console.log(storedData);
-        //TODO
-        /*
-        id,
-        name,
-        category,
-        price,
-        quantity
-        */
-        let purchases = storedData.map(p => new PurchaseDto(p.id, p.name, p.category, p.price, p.quantity));
-        console.log(purchases);
-        setProducts(purchases);
-    }
-
-    const handleRemoveItem = (itemId) => {
-        const updatedCart = cartItems.filter((item) => item.id !== itemId);
-        setCartItems(updatedCart);
-    };
-
-    const handleClearCart = () => {
-        setCartItems([]);
+        let products = storedData.map(
+            (p) =>
+                new PurchaseDto(p.id, p.name, p.category, p.price, p.quantity)
+        );
+        setProducts(products);
     };
 
     const handleBuy = () => {
-        return null;
+        let purchases = Object.entries(products).map(([productId, product]) => {
+            return new Purchase(
+                productId,
+                user.id,
+                product.price,
+                product.quantity,
+                new Date().toISOString(),
+                selectedDeliveryType,
+                selectedPaymentType
+            );
+        });
+        
+        if (purchases.length === 0) {
+            return;
+        }
+
+        makeOrder(purchases)
+            .then((res) => {
+                alert('Products have been purchased.')
+                handleCleanBasket();
+            })
+            .catch((err) => {
+                alert(err.data.status);
+            })
     };
+
+    const handleCleanBasket = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
 
     const getUserName = () => {
         return sessionStorage.getItem("username");
-    }
+    };
 
     useEffect(() => {
         fetchUser(getUserName())
@@ -64,7 +78,7 @@ const Cart = () => {
             })
             .catch((err) => {
                 setUser({});
-            })
+            });
         fetchDeliveryType()
             .then((res) => {
                 setDeliveryTypes(res);
@@ -72,7 +86,7 @@ const Cart = () => {
             .catch((err) => {
                 setDeliveryTypes([]);
                 console.log(err);
-            })
+            });
         fetchPaymentType()
             .then((res) => {
                 setPaymentTypes(res);
@@ -81,26 +95,44 @@ const Cart = () => {
             .catch((err) => {
                 setPaymentTypes([]);
                 console.log(err);
-            })
+            });
         purchaseHandler();
     }, []);
 
     return (
         <div className="cart-container">
             <h2>Shopping Cart</h2>
-            {products.map((item) => (
-                <CartItem product={item} />
-            ))}
-            {cartItems.length === 0 && <p>Your cart is empty.</p>}
-            <p className="cart-total">Total Price: ${getTotalPrice()}</p>
-            <Details user={user} deliveryTypes={deliveryTypes} paymentTypes={paymentTypes}>
+            <div className="cart-table-container">
+                <table className="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.map((item) => (
+                            <CartItem product={item} />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-            </Details>
+            {products.length === 0 && <p>Your cart is empty.</p>}
+            <hr></hr>
+            <Details
+                user={user}
+                deliveryTypes={deliveryTypes}
+                paymentTypes={paymentTypes}
+                totalPrice={getTotalPrice()}
+                selectDeliveryType={selectDeliveryType}
+                selectPaymentType={selectPaymentType}
+            ></Details>
             <div className="cart-submit">
-                <button
-                    className="clear-cart-button submit-buttons"
-                    onClick={handleClearCart}
-                >
+                <button className="clear-cart-button submit-buttons" onClick={handleCleanBasket}>
                     Clear Cart
                 </button>
                 <button className="submit-buttons" onClick={handleBuy}>

@@ -6,14 +6,7 @@ export class User {
     address;
     created_date;
 
-    constructor(
-        id,
-        name,
-        surname,
-        address,
-        created_date,
-        password,
-    ) {
+    constructor(id, name, surname, address, created_date, password) {
         this.id = id;
         this.name = name;
         this.surname = surname;

@@ -1,16 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import { categoryMapper } from "../../utility/utils";
-import { useBasket } from "../../contexts/BasketContext";
 import { PurchaseDto } from "../../dtos/purchaseDto.js";
 const Element = ({ product }) => {
-    const { dispatch } = useBasket();
+    const [quantity, setQuantity] = useState(1);
 
     const addToBasketHandler = (product) => {
-        let quantity = document.getElementById('product-quantity').value;
-        let purchaseDto = new PurchaseDto(product.id, product.name, product.category, product.price, quantity);
-        alert(product.id);
-        dispatch({ type: "ADD_TO_BASKET", payload: purchaseDto });
+        let purchaseDto = new PurchaseDto(
+            product.id,
+            product.name,
+            product.category,
+            product.price,
+            quantity
+        );
+        updateLocalStorage(purchaseDto);
+        window.location.reload();
     };
+
+    const updateLocalStorage = (item) => {
+        const basket = JSON.parse(localStorage.getItem("cart")) || [];
+        basket.push(item);
+        localStorage.setItem("cart", JSON.stringify(basket));
+    };
+
+    const quantityHandler = (value) => {
+        setQuantity(value);
+    }
 
     return (
         <div className="product-card">
@@ -42,9 +56,10 @@ const Element = ({ product }) => {
                             <p className="product-quantity-text">Quantity</p>
                             <input
                                 type="text"
-                                value="1"
+                                defaultValue="1"
                                 id="product-quantity"
                                 placeholder="Quantity"
+                                onChange={(e) => quantityHandler(e.target.value)}
                             ></input>
                         </div>
                         <button

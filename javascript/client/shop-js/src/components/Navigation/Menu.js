@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import Dropdown from "./Dropdown";
-import { useBasket } from "../../contexts/BasketContext";
 
 const Logo = () => {
     const [user, setUser] = useState("");
@@ -19,13 +18,13 @@ const Logo = () => {
     };
 
     const basketContentHandler = () => {
-        const storedData = localStorage.getItem('cart') || [];
+        const storedData = localStorage.getItem("cart") || [];
         if (storedData.length === 0) {
             return 0;
         }
         const data = JSON.parse(storedData);
-        return data.legth;
-    }
+        return data.length;
+    };
 
     return (
         <div id="topbar">
@@ -51,7 +50,9 @@ const Logo = () => {
                         )}
                     </li>
                     <li>
-                        {user ? "Basket content: " + basketContentHandler() : ""}
+                        {user
+                            ? "Basket content: " + basketContentHandler()
+                            : ""}
                     </li>
                     <li>{user ? "Logged as: " + user : ""}</li>
                 </ul>

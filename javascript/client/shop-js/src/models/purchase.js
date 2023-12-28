@@ -1,5 +1,4 @@
 export class Purchase {
-    id;
     id_product;
     id_user;
     price;
@@ -9,7 +8,6 @@ export class Purchase {
     payment_type;
 
     constructor(
-        id,
         id_product,
         id_user,
         price,
@@ -18,7 +16,6 @@ export class Purchase {
         delivery_type,
         payment_type
     ) {
-        this.id = id;
         this.id_product = id_product;
         this.id_user = id_user;
         this.price = price;

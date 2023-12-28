@@ -4,9 +4,7 @@ import Cart from "../components/Basket/Cart";
 const Basket = () => {
     return (
         <div>
-            <Cart>
-
-            </Cart>
+            <Cart></Cart>
         </div>
     );
 };
