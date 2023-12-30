@@ -1,33 +1,22 @@
-local lapis = require("lapis")
-local Application = require("lapis.application")
+local lapis = require "lapis"
+local Model = require("lapis.db.model").Model
+local csrf = require "lapis.csrf"
 
-local app = Application:extend()
+local User = Model:extend("user")
 
-app:match("/product", "controllers.product_controller.index")
-app:match("/product/:id", "controllers.product_controller.show")
-app:post("/product", "controllers.product_controller.create")
-app:patch("/product/:id", "controllers.product_controller.update")
-app:delete("/product/:id", "controllers.product_controller.destroy")
+local app = lapis.Application()
 
-app:match("/category", "controllers.category_controller.index")
-app:match("/category/:id", "controllers.category_controller.show")
+app:before_filter(function(self)
+  self.csrf_token = csrf.generate_token(self)
+end)
 
-app:match("/delivery-type", "controllers.delivery_type_controller.index")
-app:match("/delivery-type/:id", "controllers.delivery_type_controller.show")
+app:get("hello", "/hello", function(self)
+    return "Welcome to profile"
+end)
 
-app:match("/payment-type", "controllers.payment_type_controller.index")
-app:match("/payment-type/:id", "controllers.payment_type_controller.show")
-
-app:match("/purchase", "controllers.purchase_controller.index")
-app:match("/purchase/:id", "controllers.purchase_controller.show")
-app:post("/purchase", "controllers.purchase_controller.create")
-app:patch("/purchase/:id", "controllers.purchase_controller.update")
-app:delete("/purchase/:id", "controllers.purchase_controller.destroy")
-
-app:match("/users", "controllers.user_controller.index")
-app:match("/users/:id", "controllers.user_controller.show")
-app:post("/users", "controllers.user_controller.create")
-app:patch("/users/:id", "controllers.user_controller.update")
-app:delete("/users/:id", "controllers.user_controller.destroy")
+app:get("list_users", "/users", function(self)
+  self.users = User:select() -- `select` all users
+  return { render = true }
+end)
 
 return app
