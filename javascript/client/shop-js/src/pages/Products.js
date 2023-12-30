@@ -4,13 +4,16 @@ import {
     fetchProductByCategory,
     fetchProducts,
 } from "../services/productService.js";
+import { useParams } from 'react-router-dom'
 
-const Products = ({ category }) => {
+
+const Products = () => {
     const [products, setProducts] = useState([]);
+    const {idCategory} = useParams();
 
     useEffect(() => {
-        if (category) {
-            fetchProductByCategory()
+        if (idCategory) {
+            fetchProductByCategory(idCategory)
                 .then((res) => {
                     setProducts(res);
                 })
@@ -26,7 +29,7 @@ const Products = ({ category }) => {
                     setProducts([]);
                 });
         }
-    }, [category]);
+    }, [idCategory]);
 
     return (
         <div>

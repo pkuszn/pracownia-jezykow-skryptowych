@@ -93,10 +93,6 @@ const Details = ({ user, deliveryTypes, paymentTypes, totalPrice, selectPaymentT
                         ))}
                     </select>
                 </div>
-                <div>
-                    <label htmlFor="update-address">Update address</label>
-                    <input type="text" id="update-address" ></input>
-                </div>
             </div>
         </div>
     );

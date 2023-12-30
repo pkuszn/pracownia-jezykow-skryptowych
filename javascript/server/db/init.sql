@@ -37,7 +37,17 @@ INSERT INTO `product` (id, name, category, price, created_date, description, ava
   (17, "Genmaicha", 5, 7.99, '2023-01-17', 'Japanese green tea with roasted brown rice', 1),
   (18, "Cast Iron Teapot", 6, 29.99, '2023-01-18', 'Traditional cast iron teapot for a timeless experience', 1),
   (19, "Hibiscus Delight", 1, 5.99, '2023-01-19', 'Hibiscus herbal tea with a burst of floral notes', 1),
-  (20, "Pu-erh Tuo Cha", 2, 16.99, '2023-01-20', 'Fermented Pu-erh tea in convenient tuo cha form', 1);
+  (20, "Pu-erh Tuo Cha", 2, 16.99, '2023-01-20', 'Fermented Pu-erh tea in convenient tuo cha form', 1)
+    (21, "Lemon Ginger Zest", 1, 7.99, '2023-01-21', 'Herbal tea with a refreshing blend of lemon and ginger', 1),
+  (22, "High Mountain Oolong", 4, 18.99, '2023-01-22', 'Oolong tea grown in high mountain regions with a unique flavor profile', 1),
+  (23, "Mango Tango", 5, 8.99, '2023-01-23', 'Fruit tea with the tropical goodness of mango', 1),
+  (24, "Yerba Mate", 3, 10.99, '2023-01-24', 'South American tea known for its energizing properties', 1),
+  (25, "Golden Spiral Jasmine", 2, 14.99, '2023-01-25', 'Jasmine-infused green tea with golden spiral-shaped leaves', 1),
+  (26, "Chocolate Mint Rooibos", 1, 9.99, '2023-01-26', 'Rooibos tea with the delightful combination of chocolate and mint', 1),
+  (27, "Taiwanese Ruby Red", 4, 22.99, '2023-01-27', 'Ruby Red tea from Taiwan with a bold and robust flavor', 1),
+  (28, "Pomegranate Paradise", 5, 7.99, '2023-01-28', 'Fruit tea blend featuring the sweet taste of pomegranate', 1),
+  (29, "Darjeeling First Flush", 3, 15.99, '2023-01-29', 'First flush Darjeeling black tea known for its floral notes', 1),
+  (30, "Caramel Dream", 4, 11.99, '2023-01-30', 'Oolong tea with the rich and sweet taste of caramel', 1);
 
 
 INSERT INTO `purchase` (id_product, id_user, price, quantity, purchase_date, delivery_type, payment_type) VALUES 

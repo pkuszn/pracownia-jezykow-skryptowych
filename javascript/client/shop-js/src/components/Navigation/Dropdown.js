@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { fetchCategories } from "../../services/categoryService.js";
-import { Link } from "react-router-dom";
-import Products from "../../pages/Products.js";
 import "./style.css";
 
 const Dropdown = () => {
@@ -24,7 +22,7 @@ const Dropdown = () => {
 
     const handleItemClick = (value) => {
         console.log(`Item clicked: ${value}`);
-        <Link to={<Products category={value} />}></Link>;
+        window.location.replace(`/products/${value}`);
     };
 
     return (

@@ -3,7 +3,7 @@ import db from "../config/db.js";
 
 const getProduct = expressAsyncHandler(async(req, res) => {
     let params = [req.params.id];
-    let sql = `SELECT * from user where id = ?`;
+    let sql = `SELECT * from product where id = ?`;
 
     db.all(sql, params, (err, row) => {
         if (err) {

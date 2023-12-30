@@ -14,6 +14,7 @@ const Logo = () => {
 
     const logoutHandler = () => {
         sessionStorage.clear();
+        localStorage.clear();
         window.location.reload();
     };
 
