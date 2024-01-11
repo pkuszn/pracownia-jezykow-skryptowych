@@ -5,14 +5,24 @@ daemon off;
 pid logs/nginx.pid;
 
 http {
+    include mime.types;
 
     server {
         listen 8085;
         server_name lua_test;
+        lua_code_cache off;
 
         location / {
             default_type text/html;
             content_by_lua 'require("lapis").serve(require("app"))';
+        }
+
+        location /static/ {
+            alias static/;
+        }
+
+        location /favicon.ico {
+        alias static/favicon.ico;
         }
     }
 }

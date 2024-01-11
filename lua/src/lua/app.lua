@@ -3,12 +3,12 @@ local Model = require("lapis.db.model").Model
 local csrf = require "lapis.csrf"
 local capture_errors = require("lapis.application").capture_errors
 
-local category = Model:extend("category")
-local purchase = Model:extend("purchase")
-local product = Model:extend("product")
-local delivery_type = Model:extend("delivery_type")
-local payment_type = Model:extend("payment_type")
-local user = Model:extend("user")
+local category = require("models.category")
+local purchase = require("models.purchase")
+local product = require("models.product")
+local delivery_type = require("models.delivery_type")
+local payment_type = require("models.payment_type")
+local user = require("models.user")
 
 local app = lapis.Application()
 
@@ -22,19 +22,19 @@ end)
 
 -- Category
 
-app:get("category", "/category", function(self)
+app:get("get_categories", "/get-category", function(self)
   local response = category:select()
   return { json = response }
 end)
 
-app:get("category", "/category/:id", function(self)
+app:get("get_category", "/get-category/:id", function(self)
   local id = tonumber(self.params.id)
 
   if not id then
     return { json = { error = "Invalid ID" }, status = 400 }
   end
 
-  local category = category:find(id)
+  local category = category:find({id = id})
 
   if not category then
     return { json = { error = "Category not found" }, status = 404 }
@@ -45,12 +45,12 @@ end)
 
 -- PaymentType
 
-app:get("payment_type", "/payment-type", function(self)
+app:get("get_payment_types", "/get-payment-type", function(self)
   local response = payment_type:select()
   return { json = response }
 end)
 
-app:get("payment_type", "/payment-type/:id", function(self)
+app:get("get_payment_type", "/get-payment-type/:id", function(self)
   local id = tonumber(self.params.id)
 
   if not id then
@@ -67,14 +67,15 @@ app:get("payment_type", "/payment-type/:id", function(self)
 end)
 
 
+
 -- DeliveryType
 
-app:get("delivery_type", "/delivery-type", function(self)
+app:get("get_delivery_types", "/get-delivery-type", function(self)
   local response = delivery_type:select()
   return { json = response }
 end)
 
-app:get("delivery_type", "/delivery-type/:id", function(self)
+app:get("get_delivery_type", "/get-delivery-type/:id", function(self)
   local id = tonumber(self.params.id)
 
   if not id then
@@ -93,7 +94,7 @@ end)
 
 -- Purchase
 
-app:get("purchase", "/purchase", function(self)
+app:get("get_purchases", "/get-purchase", function(self)
   local purchases = purchase:select()
   if not purchases or #purchases == 0 then
       return { status = 404, json = "No purchases found."}
@@ -101,41 +102,81 @@ app:get("purchase", "/purchase", function(self)
   return { status = 200, json = purchases } 
 end)
 
-app:get("purchase", "/purchase/:id", function(self)
-  local purchase = purchase:find(self.params.id)
-  if not purchase then
-      return { status = 404, json = { message = "Cannot find specified purchase." } }
+app:get("get_purchase", "/get-purchase/:id", function(self)
+  local id = tonumber(self.params.id)
+
+  if not id then
+    return { json = { error = "Invalid ID" }, status = 400 }
   end
+
+  local purchase = purchase:find({id = id})
+
+  if not purchase then
+    return { json = { error = "Purchase not found" }, status = 404 }
+  end
+  
+  return { json = purchase }
 end)
 
-app:post("purchase", "/purchase", function(self)
-  local purchaseParams = self.params.purchase
-  local purchase = purchase:create(purchaseParams)
-  return { status = 201, json = purchase }
+app:post("add_purchase", "/add-purchase", function(self)
+  local payload = self.params
+
+  if not payload then
+    return { status = 404 }
+  end
+
+  purchase:create({
+    id_product = tonumber(payload.id_product),
+    id_user = tonumber(payload.id_user),
+    price = tonumber(payload.price),
+    purchase_date =  os.date("%Y-%m-%d"),
+    quantity = tonumber(payload.quantity),
+    delivery_type = tonumber(payload.delivery_type),
+    payment_type = tonumber(payload.payment_type)
+  })
+
+  return { status = 201 }
 end)
 
-app:put("purchase", "/purchase/:id", function(self)
-  local purchaseParams = self.params.purchase
-  local purchase = purchase:find(self.params.id)
+app:put("update_purchase", "/update-purchase/:id", function(self)
+  local payload = self.params
+
+  if not payload then
+    return { status = 404 }
+  end
+
+  local purchase = purchase:find(tonumber(payload.id))
   if not purchase then
       return { status = 404, json = { message = "Purchase not found." } }
   end
-  purchase:update(purchaseParams)
-  return { status = 204, json = purchase }
+
+  local update_purchase = {
+    id = tonumber(payload.id),
+    id_product = tonumber(payload.id_product),
+    id_user = tonumber(payload.id_user),
+    price = tonumber(payload.price),
+    purchase_date =  os.date("%Y-%m-%d"),
+    quantity = tonumber(payload.quantity),
+    delivery_type = tonumber(payload.delivery_type),
+    payment_type = tonumber(payload.payment_type)
+  }
+
+  product:update(update_purchase)
+  return { status = 204, json = update_purchase }
 end)
 
-app:delete("purchase", "/purchase/:id", function(self)
-  local purchase = purchase:find(self.params.id)
+app:delete("delete_purchase", "/delete-purchase/:id", function(self)
+  local purchase = purchase:find(tonumber(self.params.id))
   if not purchase then
       return { status = 404, json = { message = "Purchase not found" } }
   end
-  purchase:delete()
+  purchase:delete(purchase)
   return { status = 204 }
 end)
 
 -- Product
 
-app:get("product", "/product", function(self)
+app:get("get_products", "/get-product", function(self)
   local products = product:select()
   if not products or #products == 0 then
       return { status = 404, json = "No products types found."}
@@ -143,66 +184,80 @@ app:get("product", "/product", function(self)
   return { status = 200, json = products } 
 end)
 
-app:get("product", "/product/:id", function(self)
-  local product = product:find(self.params.id)
-  if not product then
-      return { status = 404, json = { message = "Cannot find specified product." } }
+app:get("get_product", "/get-product/:id", function(self)
+  local id = tonumber(self.params.id)
+
+  if not id then
+    return { json = { error = "Invalid ID" }, status = 400 }
   end
+
+  local product = product:find({id = id})
+
+  if not product then
+    return { json = { error = "Product not found" }, status = 404 }
+  end
+  
+  return { json = product }
 end)
 
-app:post("product", "/product", capture_errors(function(self)
-  csrf.assert_token(self)
 
+app:post("add_product", "/add-product", function(self)
   local payload = self.params
 
   if not payload then
     return { status = 404 }
   end
 
-  product:insert({
+  product:create({
     name = payload.name,
-    category = payload.category,
-    price = payload.price,
-    created_date = os.date("%Y-%m-%dT%H:%M:%SZ"),  
+    category = tonumber(payload.category),
+    price = tonumber(payload.price),
+    created_date = os.date("%Y-%m-%d"),  
     description = payload.description,
-    available = payload.available
+    available = not not payload.available
   })
 
   return { status = 201 }
-end))
-
-app:post("example_route", "/example", function(self)
-  local payload = self.params
-
-  -- Access data from the payload
-  local name = payload.name
-  local age = payload.age
-
-  return { json = { message = "Data received successfully" } }
 end)
 
-app:put("product", "/product/:id", function(self)
-  local productParams = self.params.product
-  local product = product:find(self.params.id)
+app:put("update_product", "/update-product", function(self)
+  local payload = self.params
+
+  if not payload then
+    return { status = 404 }
+  end
+
+  local product = product:find(tonumber(payload.id))
   if not product then
       return { status = 404, json = { message = "Product not found." } }
   end
-  product:update(productParams)
-  return { status = 204, json = product }
+
+  local update_product = {
+    id = tonumber(payload.id),
+    name = payload.name,
+    category = payload.category,
+    price = tonumber(payload.price),
+    created_date = os.date("%Y-%m-%d"),
+    description = payload.description,
+    available = not not payload.available
+  }
+
+  product:update(update_product)
+  return { status = 204, json = update_product }
 end)
 
-app:delete("product", "/product/:id", function(self)
-  local product = product:find(self.params.id)
+app:delete("delete_product", "/delete-product/:id", function(self)
+  local product = product:find(tonumber(self.params.id))
   if not product then
       return { status = 404, json = { message = "Product not found" } }
   end
-  product:delete()
+  product:delete(product)
   return { status = 204 }
 end)
 
 -- User
 
-app:get("user", "/user", function(self)
+app:get("get_users", "/get-user", function(self)
   local users = user:select()
   if not users or #users == 0 then
       return { status = 404, json = "No users found."}
@@ -210,30 +265,66 @@ app:get("user", "/user", function(self)
   return { status = 200, json = users } 
 end)
 
-app:get("user", "/user/:id", function(self)
-  local user = user:find(self.params.id)
-  if not user then
-      return { status = 404, json = { message = "Cannot find specified user." } }
+app:get("get_user", "/get-user/:id", function(self)
+  local id = tonumber(self.params.id)
+
+  if not id then
+    return { json = { error = "Invalid ID" }, status = 400 }
   end
-end)
 
-app:post("user", "/user", function(self)
-  local userParams = self.params.user
-  local user = user:create(self.userParams)
-  return { status = 201, json = user }
-end)
+  local user = user:find({id = id})
 
-app:put("user", "/user/:id", function(self)
-  local userParams = self.params.user
-  local user = user:find(self.params.id)
   if not user then
-      return { status = 404, json = { message = "User not found." } }
+    return { json = { error = "User not found" }, status = 404 }
   end
-  user:update(userParams)
-  return { status = 204, json = user }
+  
+  return { json = user }
 end)
 
-app:delete("user", "/user/:id", function(self)
+app:post("add_user", "/add-user", function(self)
+  local payload = self.params
+
+  if not payload then
+    return { status = 404 }
+  end
+
+  user:create({
+    name = payload.name,
+    surname = payload.surname,
+    password = payload.password,
+    address = payload.address,
+    created_date = os.date("%Y-%m-%d")
+  })
+
+  return { status = 201 }
+end)
+
+app:put("update_user", "/update-user/:id", function(self)
+  local payload = self.params
+
+  if not payload then
+    return { status = 404 }
+  end
+
+  local user = user:find(tonumber(payload.id))
+  if not user then
+      return { status = 404, json = { message = "Product not found." } }
+  end
+
+  local update_user = {
+    id = tonumber(payload.id),
+    name = payload.name,
+    surname = payload.surname,
+    password = payload.password,
+    address = payload.address,
+    created_date = os.date("%Y-%m-%d")
+  }
+
+  product:update(update_user)
+  return { status = 204, json = update_user }
+end)
+
+app:delete("delete_user", "/delete-user/:id", function(self)
   local user = user:find(self.params.id)
   if not user then
       return { status = 404, json = { message = "User not found" } }

@@ -1,6 +1,6 @@
 local Model = require("lapis.db.model").Model
 
-local User = Model.extend("user", {
+local User = Model:extend("user", {
     primary_key = "id",
     colunns = {
         { "id", type = "serial" },
