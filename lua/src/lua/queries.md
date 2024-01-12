@@ -15,3 +15,13 @@ PUT
 ```
 http://172.24.164.140:8085/update-product?id=22&name=Test2&category=3&price=3&description=asd&available=0
 ```
+
+GET
+```
+http://172.24.164.140:8085/get-product/1
+```
+
+DELETE
+```
+http://172.24.164.140:8085/delete-product/1
+```

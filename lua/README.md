@@ -1,5 +1,7 @@
 # Usage
 
+## Lua
+
 Run single file
 ```bash
 lua file.lua 
@@ -7,8 +9,28 @@ lua file.lua
 
 Run lapis server
 ```bash 
-lapis server
+lapis server development
 ```
+
+## Moonscript
+
+To compile moonscript files use
+```bash
+moonc .
+```
+This command should compile files in entire directory. 
+
+Next run
+
+```bash
+lapis server development
+```
+
+
+## API Tests
+
+Tests are located in `lua` directory.
+
 
 # Requirements
 
@@ -17,5 +39,5 @@ lapis server
 - Lapis
 - Moonscript
 - WSL/Ubuntu
-- sqlite3
+- mysql
 - OpenResty

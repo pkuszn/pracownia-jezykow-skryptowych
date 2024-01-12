@@ -9,7 +9,7 @@ local product = require("models.product")
 local delivery_type = require("models.delivery_type")
 local payment_type = require("models.payment_type")
 local user = require("models.user")
-
+local db = require("lapis.db")
 local app = lapis.Application()
 
 app:before_filter(function(self)
@@ -333,5 +333,13 @@ app:delete("delete_user", "/delete-user/:id", function(self)
   return { status = 204 }
 end)
 
+
+app:get("get_last_product", "/get-last-product", function(self)
+  local products = product:select("order by id desc limit 1")
+  if not products or #products == 0 then
+      return { status = 404, json = "No products types found."}
+  end
+  return { status = 200, json = products } 
+end)
 
 return app
