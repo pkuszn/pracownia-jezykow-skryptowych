@@ -29,7 +29,15 @@ lapis server development
 
 ## API Tests
 
-Tests are located in `lua` directory.
+Tests are located in `lua` directory. Start lua-api before running tests.
+
+```bash
+cd /lua/tests
+```
+
+```bash
+lua APITests.lua
+```
 
 
 # Requirements
