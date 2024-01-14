@@ -13,7 +13,7 @@ last_index = db.last_record()[0]
 puts "Set index: #{last_index}"
 
 scraper = Scraper.new(base_url, category_uri)
-products = scraper.doc_loop(1, 0)
+products = scraper.doc_loop(1, last_index)
 scraper.save_to_file(products, "products")
 
 products.each do |product|
