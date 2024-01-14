@@ -70,3 +70,4 @@
 2024/01/12 18:02:57 [alert] 30964#30964: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/moonscript/nginx.conf.compiled:13
 2024/01/12 18:03:24 [alert] 31077#31077: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/moonscript/nginx.conf.compiled:13
 2024/01/12 18:04:54 [alert] 31601#31601: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/moonscript/nginx.conf.compiled:13
+2024/01/12 19:13:03 [alert] 59224#59224: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/moonscript/nginx.conf.compiled:13

@@ -1730,3 +1730,7 @@ coroutine 0:
 2024/01/12 18:46:19 [alert] 47099#47099: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/lua/nginx.conf.compiled:13
 2024/01/12 18:46:21 [alert] 47132#47132: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/lua/nginx.conf.compiled:13
 2024/01/12 18:46:38 [alert] 47221#47221: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/lua/nginx.conf.compiled:13
+2024/01/12 19:09:26 [alert] 57836#57836: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/lua/nginx.conf.compiled:13
+2024/01/12 19:17:27 [alert] 60745#60745: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/lua/nginx.conf.compiled:13
+2024/01/12 19:17:47 [alert] 60859#60859: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/lua/nginx.conf.compiled:13
+2024/01/12 19:17:52 [alert] 60894#60894: lua_code_cache is off; this will hurt performance in /home/pkuszneruk/university/pracownia-jezykow-skryptowych/lua/src/lua/nginx.conf.compiled:13
