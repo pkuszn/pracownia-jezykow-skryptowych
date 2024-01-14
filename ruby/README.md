@@ -1,12 +1,13 @@
 # Usage
 
-Windows installer
-```
-https://rubyinstaller.org/downloads/
+Run script
+```bash
+ruby main.rb
 ```
 
-Unix
+# Requirements
 
-```
-https://www.ruby-lang.org/pl/documentation/installation/#package-management-systems
-```
+- wsl/linux
+- ruby3.0.0
+- nokogiri
+- sqlite3-ruby
