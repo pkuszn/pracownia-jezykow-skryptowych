@@ -1,6 +1,13 @@
+#! /usr/bin/env ruby
+
 require_relative 'scraper.rb'
 
-scraper = Scraper.new
-doc = scraper.doc()
-products = scraper.scrap_category(doc, "Herbata Hyleys")
-scraper.save_to_file(products)
+uri = "https://herbaciarnia24h.pl/pl/c/Rodzaj-herbaty/334"
+
+scraper = Scraper.new(uri)
+products = scraper.doc_loop(5)
+scraper.save_to_file(products, "products")
+
+products.each do |product|
+    product.to_string
+end
