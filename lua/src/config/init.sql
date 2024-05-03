@@ -16,7 +16,7 @@ INSERT INTO `category` (id, name) VALUES
     (5, "Fruit teas"),
     (6, "Tea accessories");
 
-INSERT INTO `user` (id, name, surname, address, created_date) VALUES
+INSERT INTO `user` (id, name, surname, password, address, created_date) VALUES
     (1, "root", "root", "root", "Zabrze", "2023-12-22T20:44:42Z");
 
 INSERT INTO `product` (id, name, category, price, created_date, description, available) VALUES
@@ -25,9 +25,9 @@ INSERT INTO `product` (id, name, category, price, created_date, description, ava
   (3, "Silver Needle", 3, 9.99, '2023-01-03', 'A delicate white tea with silver buds', 1),
   (4, "Tie Guan Yin", 4, 12.99, '2023-01-04', 'An oolong tea with floral and fruity notes', 1),
   (5, "Berry Bliss", 5, 6.99, '2023-01-05', 'Fruit tea blend with berries', 1),
-  (6, "Tea Infuser", 6, 4.99, '2023-01-06', 'Stainless steel tea infuser for loose leaf tea', 1)
+  (6, "Tea Infuser", 6, 4.99, '2023-01-06', 'Stainless steel tea infuser for loose leaf tea', 1),
   (7, "Chamomile Dream", 1, 8.99, '2023-01-07', 'Calming chamomile tea for a peaceful sleep', 1),
-  (8, "Dragonwell Green", 2, 10.99, '2023-01-08', 'High-quality green tea from West Lake, China', 1),
+  (8, "Dragonwell Green", 2, 10.99, '2023-01-08', 'High-quality green tea from West Lake China', 1),
   (9, "Golden Monkey", 3, 11.99, '2023-01-09', 'A bold and malty black tea with golden tips', 1),
   (10, "Milk Oolong", 4, 14.99, '2023-01-10', 'Creamy oolong tea with a hint of sweetness', 1),
   (11, "Citrus Burst", 5, 7.99, '2023-01-11', 'Citrus-infused tea blend for a refreshing taste', 1),

@@ -14,16 +14,16 @@ INSERT INTO `category` (id, name) VALUES
     (5, "Fruit teas"),
     (6, "Tea accessories");
 
-INSERT INTO `user` (id, name, surname, address, created_date) VALUES
+INSERT INTO `user` (id, name, surname, password, address, created_date) VALUES
     (1, "root", "root", "root", "Zabrze", "2023-12-22T20:44:42Z");
-
+    
 INSERT INTO `product` (id, name, category, price, created_date, description, available) VALUES
   (1, "Earl Grey", 1, 5.99, '2023-01-01', 'A classic black tea with bergamot flavor', 1),
   (2, "Jasmine Green Tea", 2, 7.99, '2023-01-02', 'Green tea scented with jasmine flowers', 1),
   (3, "Silver Needle", 3, 9.99, '2023-01-03', 'A delicate white tea with silver buds', 1),
   (4, "Tie Guan Yin", 4, 12.99, '2023-01-04', 'An oolong tea with floral and fruity notes', 1),
   (5, "Berry Bliss", 5, 6.99, '2023-01-05', 'Fruit tea blend with berries', 1),
-  (6, "Tea Infuser", 6, 4.99, '2023-01-06', 'Stainless steel tea infuser for loose leaf tea', 1)
+  (6, "Tea Infuser", 6, 4.99, '2023-01-06', 'Stainless steel tea infuser for loose leaf tea', 1),
   (7, "Chamomile Dream", 1, 8.99, '2023-01-07', 'Calming chamomile tea for a peaceful sleep', 1),
   (8, "Dragonwell Green", 2, 10.99, '2023-01-08', 'High-quality green tea from West Lake, China', 1),
   (9, "Golden Monkey", 3, 11.99, '2023-01-09', 'A bold and malty black tea with golden tips', 1),
@@ -37,8 +37,8 @@ INSERT INTO `product` (id, name, category, price, created_date, description, ava
   (17, "Genmaicha", 5, 7.99, '2023-01-17', 'Japanese green tea with roasted brown rice', 1),
   (18, "Cast Iron Teapot", 6, 29.99, '2023-01-18', 'Traditional cast iron teapot for a timeless experience', 1),
   (19, "Hibiscus Delight", 1, 5.99, '2023-01-19', 'Hibiscus herbal tea with a burst of floral notes', 1),
-  (20, "Pu-erh Tuo Cha", 2, 16.99, '2023-01-20', 'Fermented Pu-erh tea in convenient tuo cha form', 1)
-    (21, "Lemon Ginger Zest", 1, 7.99, '2023-01-21', 'Herbal tea with a refreshing blend of lemon and ginger', 1),
+  (20, "Pu-erh Tuo Cha", 2, 16.99, '2023-01-20', 'Fermented Pu-erh tea in convenient tuo cha form', 1),
+  (21, "Lemon Ginger Zest", 1, 7.99, '2023-01-21', 'Herbal tea with a refreshing blend of lemon and ginger', 1),
   (22, "High Mountain Oolong", 4, 18.99, '2023-01-22', 'Oolong tea grown in high mountain regions with a unique flavor profile', 1),
   (23, "Mango Tango", 5, 8.99, '2023-01-23', 'Fruit tea with the tropical goodness of mango', 1),
   (24, "Yerba Mate", 3, 10.99, '2023-01-24', 'South American tea known for its energizing properties', 1),
@@ -48,6 +48,7 @@ INSERT INTO `product` (id, name, category, price, created_date, description, ava
   (28, "Pomegranate Paradise", 5, 7.99, '2023-01-28', 'Fruit tea blend featuring the sweet taste of pomegranate', 1),
   (29, "Darjeeling First Flush", 3, 15.99, '2023-01-29', 'First flush Darjeeling black tea known for its floral notes', 1),
   (30, "Caramel Dream", 4, 11.99, '2023-01-30', 'Oolong tea with the rich and sweet taste of caramel', 1);
+
 
 
 INSERT INTO `purchase` (id_product, id_user, price, quantity, purchase_date, delivery_type, payment_type) VALUES 
